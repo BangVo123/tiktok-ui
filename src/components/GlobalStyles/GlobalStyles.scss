@@ -1,11 +1,22 @@
 @import 'normalize.css';
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 :root {
-    --primary: #fe2c55;
+    --primary: rgb(254, 44, 85);
+    --background-primary: rgba(18, 18, 18, 1);
+    --background-secondary: rgba(255, 255, 255, 0.12);
+    --text-color-primary: rgba(255, 255, 255, 0.9);
+    --text-color-secondary: rgba(255, 255, 255, 0.5);
+
+    --font-family: 'TiktokFont', sans-serif;
+
+    //Default layout
+    --default-layout-header-height: 60px;
+    --sidebar-width: 240px;
 }
 
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -13,10 +24,102 @@ html {
     font-size: 62.5%;
 }
 
+//Font emmbeded
+@font-face {
+    font-family: TikTokDisplayFont;
+    src: url('~/src/assets/fonts/TikTokDisplayFont-Bold.woff2') format('woff2');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: TikTokDisplayFont;
+    src: url('~/src/assets/fonts/TikTokDisplayFont-Semibold.woff2');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: TikTokFont;
+    src: url('~/src/assets/fonts/TikTokFont-Semibold.woff2');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: TikTokFont;
+    src: url('~/src/assets/fonts/TikTokFont-Bold.woff2');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: TikTokFont;
+    src: url('~/src/assets/fonts/TikTokFont-Regular.woff2');
+    font-weight: 400;
+}
+
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--font-family);
     font-style: normal;
     font-size: 1.6rem;
-    line-height: 1.5rem;
+    color: var(--text-color-primary);
+    background-color: var(--background-primary);
     text-rendering: optimizeSpeed;
+}
+
+//Scroll bar
+html ::-webkit-scrollbar {
+    border-radius: 0px;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+html ::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+input,
+button,
+[tabindex] {
+    border: none;
+    outline: none;
+}
+
+a {
+    color: var(--text-color-primary);
+    text-decoration: none;
+}
+
+//custom tippy tooltip
+body {
+    .tippy-box {
+        border-radius: 8px;
+        font-size: 1.6rem;
+        line-height: 2.2rem;
+        background-color: rgba(84, 84, 84, 0.92);
+        color: #fff;
+        font-weight: 600;
+        overflow-y: overlay;
+    }
+
+    .tippy-content {
+        padding: 8px 9px;
+    }
 }

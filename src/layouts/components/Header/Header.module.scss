@@ -1,0 +1,81 @@
+.wrapper {
+    --search-border: 92px;
+    --search-btn-height: 46px;
+    --search-btn-width: 52px;
+    --split-height: 28px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: var(--default-layout-header-height);
+    box-shadow: 0px 1px 1px rgba(255 255 255 /12%);
+    background-color: var(--background-primary);
+    padding: 0px 16px;
+    z-index: 10;
+}
+
+.logo {
+    padding-top: 16px;
+}
+
+//action
+.action {
+    display: flex;
+    align-items: center;
+}
+
+.upload-btn {
+    margin-right: 24px;
+}
+
+.action-btn {
+    background-color: transparent;
+    color: #fff;
+    font-size: 2.2rem;
+    min-width: 32px;
+    height: 32px;
+    padding: 4px 12px;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    position: relative;
+
+    &.inbox::before {
+        content: '12';
+        position: absolute;
+        top: 0;
+        right: 8px;
+        width: 2rem;
+        height: 2rem;
+        background-color: var(--primary);
+        font-family: var(--font-family);
+        font-size: 1.2rem;
+        line-height: 2rem;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 50%;
+    }
+}
+
+.more-btn {
+    font-size: 2rem;
+    margin-left: 28px;
+    padding: 4px 8px;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+.avt {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 16px;
+    cursor: pointer;
+}
