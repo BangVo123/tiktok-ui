@@ -1,0 +1,14 @@
+.wrapper {
+    position: fixed;
+    top: var(--default-layout-header-height);
+    left: 0;
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--default-layout-header-height));
+    padding: 20px 0 16px 8px;
+    background-color: rgb(18, 18, 18);
+    overflow-y: auto;
+}
+
+.navigator {
+    margin-bottom: 8px;
+}

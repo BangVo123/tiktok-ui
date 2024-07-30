@@ -1,0 +1,84 @@
+.wrapper {
+    padding: 16px 0 0 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'TiktokDisplayFont';
+    & * {
+        color: var(--text-color-secondary);
+    }
+}
+
+.banner {
+    margin-bottom: 26px;
+}
+
+.banner-btn {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    background-color: var(--background-secondary);
+    cursor: pointer;
+
+    &::before {
+        content: 'Create Tiktok effects, get a reward';
+        position: absolute;
+        top: 18%;
+        left: 22%;
+        width: 65%;
+        height: 60%;
+        font-size: 1.4rem;
+        line-height: 1.6rem;
+        color: #f6edc3;
+        text-align: start;
+        font-family: 'TiktokDisplayFont';
+    }
+}
+
+.img {
+    height: 50px;
+    width: 92%;
+    border-radius: 8px;
+}
+
+.container:not(:last-child) {
+    margin-bottom: 16px;
+}
+
+.list-header {
+    font-size: 1.6rem;
+    line-height: 2rem;
+    cursor: pointer;
+}
+
+.list-header.active {
+    color: var(--text-color-primary);
+}
+
+.list-header.active + .list {
+    display: block;
+}
+
+.list {
+    margin-bottom: 8px;
+    display: none;
+}
+
+.link-item {
+    display: inline-block;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    margin: 6px 6px 0 0;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.copyright {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    margin: 8px 6px 0 0;
+}

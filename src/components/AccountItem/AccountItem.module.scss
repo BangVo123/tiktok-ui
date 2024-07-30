@@ -22,11 +22,14 @@
     margin-left: 12px;
 }
 
-.name {
-    font-size: 1.4rem;
-    font-weight: 500;
+.container {
     display: flex;
     color: var(--text-color-primary);
+}
+
+.name {
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
 .check {
