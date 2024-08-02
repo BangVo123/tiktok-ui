@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Footer.module.scss';
 import Image from '~/components/Image';
 import images from '~/assets/images';
-import AboutItem from './AboutItem';
+import About from './About';
 import config from '~/config';
 
 const cx = classNames.bind(styles);
@@ -16,9 +16,7 @@ function Footer() {
                 </button>
             </div>
             <div className={cx('about')}>
-                {config.about.map((el, idx) => (
-                    <AboutItem key={idx} aboutItem={el} />
-                ))}
+                <About />
             </div>
             <span className={cx('copyright')}>© 2024 TikTok</span>
         </div>
