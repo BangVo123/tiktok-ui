@@ -16,10 +16,13 @@ import {
 } from '~/components/Icons';
 import FollowingAccounts from '~/components/FollowingAccounts';
 import Footer from './Footer';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
-function Sidebar() {
+function Sidebar({ onShowModal }) {
+    const currentUser = false;
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('navigator')}>
@@ -57,8 +60,18 @@ function Sidebar() {
                 </Menu>
             </div>
 
-            {/* Following account */}
-            <FollowingAccounts lable="Following accounts" />
+            {currentUser ? (
+                <FollowingAccounts lable="Following accounts" />
+            ) : (
+                <div className={cx('container')}>
+                    <h4 className={cx('title')}>
+                        Log in to follow creators, like videos, and view comments.
+                    </h4>
+                    <Button outline className={cx('btn')} onClick={onShowModal}>
+                        Log in
+                    </Button>
+                </div>
+            )}
             <Footer />
         </div>
     );

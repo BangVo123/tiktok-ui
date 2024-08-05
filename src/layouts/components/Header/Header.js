@@ -75,7 +75,7 @@ const handleMenuChange = (menuItem) => {
     }
 };
 
-const currentUser = true;
+const currentUser = false;
 
 const userMenu = [
     {
@@ -102,7 +102,7 @@ const userMenu = [
     },
 ];
 
-function Header() {
+function Header({ onShowModal }) {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('logo')}>
@@ -124,20 +124,12 @@ function Header() {
                         >
                             Upload
                         </Button>
-                        <Tippy
-                            delay={[0, 200]}
-                            content="Messages"
-                            placement="bottom"
-                        >
+                        <Tippy delay={[0, 200]} content="Messages" placement="bottom">
                             <button className={cx('action-btn')}>
                                 <MessageIcon />
                             </button>
                         </Tippy>
-                        <Tippy
-                            delay={[0, 200]}
-                            content="Inbox"
-                            placement="bottom"
-                        >
+                        <Tippy delay={[0, 200]} content="Inbox" placement="bottom">
                             <button className={cx('action-btn', 'inbox')}>
                                 <InboxIcon />
                             </button>
@@ -145,13 +137,12 @@ function Header() {
                     </>
                 ) : (
                     <>
-                        <Button primary>Log in</Button>
+                        <Button primary onClick={onShowModal}>
+                            Log in
+                        </Button>
                     </>
                 )}
-                <Menu
-                    items={currentUser ? userMenu : MENU_ITEMS}
-                    onChange={handleMenuChange}
-                >
+                <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                     {currentUser ? (
                         <Image
                             className={cx('avt')}

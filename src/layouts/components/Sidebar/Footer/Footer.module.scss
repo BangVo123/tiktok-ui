@@ -1,5 +1,5 @@
 .wrapper {
-    padding: 16px 0 0 8px;
+    padding: 16px 8px 0 8px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-family: 'TiktokDisplayFont';
     & * {
@@ -9,6 +9,7 @@
 
 .banner {
     margin-bottom: 26px;
+    width: 100%;
 }
 
 .banner-btn {
@@ -25,7 +26,7 @@
         content: 'Create Tiktok effects, get a reward';
         position: absolute;
         top: 18%;
-        left: 22%;
+        left: 25%;
         width: 65%;
         height: 60%;
         font-size: 1.4rem;
@@ -38,7 +39,7 @@
 
 .img {
     height: 50px;
-    width: 92%;
+    width: 100%;
     border-radius: 8px;
 }
 
