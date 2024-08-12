@@ -29,23 +29,20 @@ function Modal({ isOpen, isLogin, onCloseModal, onChangeIsLogin }) {
                     <div className={cx('container')}>
                         <h2 className={cx('title')}>{header}</h2>
                         <div className={cx('list-btn')}>
-                            {listBtn.map((btn) => {
+                            {listBtn.map((btn, idx) => {
                                 const Icon = btn.Icon;
                                 return (
-                                    <Button auth leftIcon={<Icon />} className={cx('btn')}>
+                                    <Button
+                                        key={idx}
+                                        auth
+                                        leftIcon={<Icon />}
+                                        className={cx('btn')}
+                                        onClick={btn.onclick}
+                                    >
                                         {btn.title}
                                     </Button>
                                 );
                             })}
-                            {/* <Button auth leftIcon={<UserIcon />} className={cx('btn')}>
-                                Use phone / email
-                            </Button>
-                            <Button auth leftIcon={<FacebookIcon />} className={cx('btn')}>
-                                Continue with Facebook
-                            </Button>
-                            <Button auth leftIcon={<GoogleIcon />} className={cx('btn')}>
-                                Continue with Google
-                            </Button> */}
                         </div>
                         <p className={cx('text-content')}>
                             By continuing with an account located in{' '}

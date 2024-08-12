@@ -8,7 +8,6 @@ export const MessageIcon = ({ width = '2.8rem', height = '2.8rem', className }) 
             height={height}
             data-e2e
             viewBox="0 0 48 48"
-            // fill="currentColor"
             fill="#fff"
             xmlns="http://www.w3.org/2000/svg"
         >
@@ -29,7 +28,6 @@ export const InboxIcon = ({ width = '3.2rem', height = '3.2rem', className }) =>
             height={height}
             data-e2e
             viewBox="0 0 32 32"
-            // fill="currentColor"
             fill="#fff"
             xmlns="http://www.w3.org/2000/svg"
         >
@@ -116,7 +114,7 @@ export const ActiveCompassIcon = ({ width = '3.2rem', height = '3.2rem', classNa
     );
 };
 
-export const DefaultFollowIcon = ({ width = '2.4rem', height = '2.4rem', className }) => {
+export const DefaultFollowIcon = ({ width = '2.6rem', height = '2.6rem', className }) => {
     return (
         <svg
             className={className}
@@ -137,7 +135,7 @@ export const DefaultFollowIcon = ({ width = '2.4rem', height = '2.4rem', classNa
         </svg>
     );
 };
-export const ActiveFollowIcon = ({ width = '2.4rem', height = '2.4rem', className }) => {
+export const ActiveFollowIcon = ({ width = '2.6rem', height = '2.6rem', className }) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -325,6 +323,75 @@ export const FacebookIcon = ({ width = '2rem', height = '2rem', className }) => 
                 d="M24 1C11.2964 1 1 11.2964 1 24C1 35.4775 9.40298 44.9804 20.3846 46.7205L20.3936 30.6629H14.5151V24.009H20.3936C20.3936 24.009 20.3665 20.2223 20.3936 18.5363C20.4206 16.8503 20.7542 15.2274 21.6288 13.7487C22.9722 11.4586 25.0639 10.3407 27.6335 10.0251C29.7432 9.76362 31.826 10.0521 33.9087 10.3407C34.0529 10.3587 34.125 10.3767 34.2693 10.4038C34.2693 10.4038 34.2783 10.6472 34.2693 10.8005C34.2603 12.4053 34.2693 16.0839 34.2693 16.0839C33.2685 16.0659 31.6096 15.9667 30.5096 16.138C28.6884 16.4175 27.6425 17.5806 27.6064 19.4108C27.5704 20.8354 27.5884 24.009 27.5884 24.009H33.9988L32.962 30.6629H27.5974V46.7205C38.597 44.9984 47.009 35.4775 47.009 24C47 11.2964 36.7036 1 24 1Z"
                 fill="#0075FA"
             ></path>
+        </svg>
+    );
+};
+
+export const FavoriteIcon = ({ width = '2.4rem', height = '2.4rem', className }) => {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className={className}
+            width={width}
+            height={height}
+            fill="currentColor"
+        >
+            <path
+                fill="currentColor"
+                d="M4 4.5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v15.13a1 1 0 0 1-1.555.831l-6.167-4.12a.5.5 0 0 0-.556 0l-6.167 4.12A1 1 0 0 1 4 19.63z"
+            ></path>
+            <path
+                fill="currentColor"
+                fillOpacity=".03"
+                d="M4.032 4.144Q4 4.317 4 4.5v15.13a1 1 0 0 0 1.555.831l6.167-4.12a.5.5 0 0 1 .41-.066l-.427-.198a1.49 1.49 0 0 0-1.377.063c-.581.339-1.45.85-2.25 1.339-.59.359-1.427.695-2.187.962-.929.325-1.86-.387-1.86-1.37zm8.251 12.202 6.162 4.115A1 1 0 0 0 20 19.63V4.5a2 2 0 0 0-1.123-1.798c.21.254.334.58.33.936a117 117 0 0 1-.896 13.408c-.124.99-1.17 1.553-2.076 1.133z"
+            ></path>
+        </svg>
+    );
+};
+
+export const AutoScrollIcon = ({ width = '2rem', height = '2rem', className }) => {
+    return (
+        <svg
+            className={className}
+            xmlns="http://www.w3.org/2000/svg"
+            width={height}
+            height={width}
+            fill="currentColor"
+        >
+            <path
+                fill="currentColor"
+                d="M10.56 1.376a.87.87 0 0 1 1.136 0l8.506 7.39c.606.525.234 1.52-.568 1.52H15.02a.433.433 0 0 0-.433.434v2.6a.867.867 0 0 1-.867.867h-5.2a.867.867 0 0 1-.867-.867v-2.6a.433.433 0 0 0-.433-.433H2.61c-.802 0-1.174-.996-.568-1.522zM4.722 8.553H8.52c.479 0 .867.388.867.867v2.6c0 .24.194.433.433.433h2.6c.24 0 .433-.194.433-.433v-2.6c0-.479.388-.867.867-.867h3.626L11.39 3.461a.43.43 0 0 0-.559-.003zm2.931 7.367c0-.24.194-.433.434-.433h6.066c.24 0 .434.194.434.433v.867a.433.433 0 0 1-.434.433H8.087a.433.433 0 0 1-.434-.433zm.434 2.6a.433.433 0 0 0-.434.433v.867c0 .24.194.433.434.433h6.066c.24 0 .434-.194.434-.433v-.867a.433.433 0 0 0-.434-.433z"
+            ></path>
+        </svg>
+    );
+};
+
+export const HeartBrokenIcon = ({ width = '2rem', height = '2rem', className }) => {
+    return (
+        <svg
+            className={className}
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height={height}
+            viewBox="0 0 48 48"
+            fill="currentColor"
+        >
+            <path d="M26.56 6.47a21.7 21.7 0 0 1 2.81 3.01 8.77 8.77 0 0 1 5.84-.8c1.3.27 3.67 1.5 5.23 3.81 1.48 2.18 2.35 5.48.55 10.18-1.4 3.68-4.6 7.43-8.2 10.64a55 55 0 0 1-8.79 6.4 55 55 0 0 1-8.79-6.4c-3.6-3.21-6.8-6.96-8.2-10.64-1.8-4.7-.93-8 .55-10.18a9.35 9.35 0 0 1 5.23-3.8c2.96-.6 5.31.33 7 1.48.73.49 1.39 1.06 1.99 1.7l-2.6 8.92a1 1 0 0 0 .44 1.1l4 2.52-1.38 4.51a.65.65 0 0 0 1.18.55l3.83-5.98a.53.53 0 0 0-.1-.7l-3.8-3.2 2.84-8.54s-1.9-2.66-4.15-4.19A12.97 12.97 0 0 0 12 4.76c-2.31.47-5.59 2.3-7.75 5.49-2.26 3.32-3.21 7.99-.98 13.85 1.75 4.57 5.5 8.83 9.28 12.2a56.6 56.6 0 0 0 10.52 7.47l.93.49.93-.49a56.6 56.6 0 0 0 10.52-7.47c3.78-3.37 7.53-7.63 9.28-12.2 2.23-5.86 1.28-10.53-.98-13.85-2.16-3.2-5.44-5.02-7.75-5.48-3.94-.8-7.16.31-9.44 1.7"></path>
+        </svg>
+    );
+};
+
+export const FlagIcon = ({ width = '2rem', height = '2rem', className }) => {
+    return (
+        <svg
+            className={className}
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height={height}
+            viewBox="0 0 48 48"
+            fill="currentColor"
+        >
+            <path d="M9 9.31v17.75c5.27-1.73 11.45-2.05 16.16 1.31 4.03 2.88 9.52 2.01 13.84.32V10.94c-5.27 1.73-11.45 2.05-16.16-1.31-4-2.86-9.53-2.01-13.84-.32M43 8v22a2 2 0 0 1-1.1 1.79c-5.83 2.9-13.5 3.82-19.06-.16C18.8 28.75 13.32 29.6 9 31.3V44a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8c0-.75.44-1.45 1.1-1.79 5.75-2.87 13.62-3.73 19.06.16 4.37 3.13 10.43 2.04 14.95-.16C41.4 5.56 43 6.54 43 8"></path>
         </svg>
     );
 };

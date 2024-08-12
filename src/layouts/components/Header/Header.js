@@ -16,6 +16,7 @@ import {
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 
 import styles from './Header.module.scss';
 import images from '~/assets/images';
@@ -25,6 +26,7 @@ import { InboxIcon, MessageIcon } from '~/components/Icons/Icons';
 import Image from '~/components/Image';
 import Search from '../Search/Search';
 import config from '~/config';
+import { UserContext } from '~/Provider/UserProvider';
 
 const cx = classNames.bind(styles);
 
@@ -75,8 +77,6 @@ const handleMenuChange = (menuItem) => {
     }
 };
 
-const currentUser = false;
-
 const userMenu = [
     {
         icon: <FontAwesomeIcon icon={faUser} />,
@@ -103,6 +103,8 @@ const userMenu = [
 ];
 
 function Header({ onShowModal }) {
+    const { curUser, setCurUser } = useContext(UserContext);
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('logo')}>
@@ -115,7 +117,7 @@ function Header({ onShowModal }) {
             <Search />
 
             <div className={cx('action')}>
-                {currentUser ? (
+                {Object.keys(curUser).length !== 0 ? (
                     <>
                         <Button
                             className={cx('upload-btn')}
@@ -137,18 +139,22 @@ function Header({ onShowModal }) {
                     </>
                 ) : (
                     <>
-                        <Button primary onClick={onShowModal}>
+                        <Button
+                            primary
+                            onClick={() => {
+                                onShowModal();
+                            }}
+                        >
                             Log in
                         </Button>
                     </>
                 )}
-                <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
-                    {currentUser ? (
-                        <Image
-                            className={cx('avt')}
-                            src="https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/1e7a2459fff815bcdc28aa59a7c41893.jpeg?lk3s=a5d48078&nonce=53083&refresh_token=cc172fbc0ae55e7699a57156af43d3f1&x-expires=1722175200&x-signature=QeF16MACUBPvib1%2BPSj162Yrwb4%3D&shp=a5d48078&shcp=b59d6b55"
-                            alt="Nguyen Van A"
-                        />
+                <Menu
+                    items={Object.keys(curUser).length !== 0 ? userMenu : MENU_ITEMS}
+                    onChange={handleMenuChange}
+                >
+                    {Object.keys(curUser).length !== 0 ? (
+                        <Image className={cx('avt')} src={curUser.avatar} alt="Nguyen Van A" />
                     ) : (
                         <button className={cx('more-btn')}>
                             <FontAwesomeIcon icon={faEllipsisVertical} />

@@ -97,6 +97,8 @@
     border-radius: 8px;
     font-weight: 600;
     color: var(--text-color-primary);
+    cursor: pointer;
+    border: 1px solid transparent;
 
     & .icon:first-child {
         position: absolute;
@@ -107,6 +109,11 @@
     & .title {
         text-align: center;
         margin-left: 0;
+    }
+
+    &:hover {
+        border-color: var(--text-color-primary);
+        background-color: rgb(18, 18, 18);
     }
 }
 
