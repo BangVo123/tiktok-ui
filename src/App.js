@@ -2,41 +2,54 @@ import { Fragment, useContext, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from '~/routes';
 import DefaultLayout from './layouts';
-import httpRequest from './utils/httpRequest';
+import * as httpRequest from './utils/httpRequest';
 import { UserContext } from './Provider/UserProvider';
 
 function App() {
     let { curUser, setCurUser } = useContext(UserContext);
-    const hasFetch = useRef(false);
+
+    // useEffect(() => {
+    //     let isMounted = true;
+
+    //     const fetchData = async () => {
+    //         try {
+    //             if (!isMounted) return;
+
+    //             const res = await httpRequest.get('/auth/', { withCredentials: true });
+    //             console.log(res);
+    //             if (isMounted) setCurUser(res.user);
+    //         } catch (e) {
+    //             console.log(e);
+    //         }
+    //     };
+
+    //     if (Object.keys(curUser).length === 0) {
+    //         fetchData();
+    //     }
+
+    //     return () => {
+    //         isMounted = false;
+    //     };
+    // }, [curUser, setCurUser]);
 
     useEffect(() => {
-        console.log('a');
-        console.log('cur user: ', curUser);
+        const fetchData = async () => {
+            try {
+                console.log('Fetching user data...');
+                const res = await httpRequest.get('/auth', {
+                    withCredentials: true,
+                });
+                // console.log('API Response:', res);
+                setCurUser(res.data);
+            } catch (e) {
+                console.error('API Fetch Error:', e);
+            }
+        };
+
         if (Object.keys(curUser).length === 0) {
-            console.log('b');
             fetchData();
         }
-    }, [curUser]);
-
-    const fetchData = async () => {
-        if (!hasFetch.current) {
-            hasFetch.current = true;
-            return;
-        }
-        hasFetch.current = false;
-        console.log('c');
-        try {
-            // const res = await fetch('http://127.0.0.1:3050/api/v1/auth', {
-            //     method: 'GET',
-            //     credentials: 'include',
-            // });
-            const res = await httpRequest.get('/auth', { withCredentials: true });
-            console.log(res);
-            setCurUser(res.user);
-        } catch (e) {
-            console.log(e);
-        }
-    };
+    }, []);
 
     return (
         <Router>

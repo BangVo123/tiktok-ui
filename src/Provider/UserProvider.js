@@ -3,7 +3,7 @@ import { createContext, useRef, useState } from 'react';
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-    const [curUser, setCurUser] = useState({});
+    let [curUser, setCurUser] = useState({});
 
     return (
         <UserContext.Provider

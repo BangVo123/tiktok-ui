@@ -104,6 +104,7 @@ const userMenu = [
 
 function Header({ onShowModal }) {
     const { curUser, setCurUser } = useContext(UserContext);
+    console.log(curUser);
 
     return (
         <header className={cx('wrapper')}>
