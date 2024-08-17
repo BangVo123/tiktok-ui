@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useRef } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from '~/routes';
 import DefaultLayout from './layouts';
@@ -8,30 +8,6 @@ import { UserContext } from './Provider/UserProvider';
 function App() {
     let { curUser, setCurUser } = useContext(UserContext);
 
-    // useEffect(() => {
-    //     let isMounted = true;
-
-    //     const fetchData = async () => {
-    //         try {
-    //             if (!isMounted) return;
-
-    //             const res = await httpRequest.get('/auth/', { withCredentials: true });
-    //             console.log(res);
-    //             if (isMounted) setCurUser(res.user);
-    //         } catch (e) {
-    //             console.log(e);
-    //         }
-    //     };
-
-    //     if (Object.keys(curUser).length === 0) {
-    //         fetchData();
-    //     }
-
-    //     return () => {
-    //         isMounted = false;
-    //     };
-    // }, [curUser, setCurUser]);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -39,8 +15,9 @@ function App() {
                 const res = await httpRequest.get('/auth', {
                     withCredentials: true,
                 });
-                // console.log('API Response:', res);
-                setCurUser(res.data);
+                if (res.data) {
+                    setCurUser(res.data);
+                }
             } catch (e) {
                 console.error('API Fetch Error:', e);
             }

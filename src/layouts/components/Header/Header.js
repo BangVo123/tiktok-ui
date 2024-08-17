@@ -1,21 +1,10 @@
 //Allow using "-" when using name of class for scss
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faEllipsisVertical,
-    faEarthAsia,
-    faCircleQuestion,
-    faHouseCrack,
-    faPlus,
-    faMoon,
-    faUser,
-    faCoins,
-    faGear,
-    faSignOut,
-} from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 
 import styles from './Header.module.scss';
@@ -30,41 +19,6 @@ import { UserContext } from '~/Provider/UserProvider';
 
 const cx = classNames.bind(styles);
 
-const MENU_ITEMS = [
-    {
-        icon: <FontAwesomeIcon icon={faHouseCrack} />,
-        title: 'Creator tools',
-    },
-    {
-        icon: <FontAwesomeIcon icon={faEarthAsia} />,
-        title: 'English',
-        children: {
-            title: 'Language',
-            data: [
-                {
-                    type: 'language',
-                    code: 'en',
-                    title: 'English',
-                },
-                {
-                    type: 'language',
-                    code: 'vi',
-                    title: 'Viet Nam',
-                },
-            ],
-        },
-    },
-    {
-        icon: <FontAwesomeIcon icon={faCircleQuestion} />,
-        title: 'Feedback and help',
-        to: '/feedback',
-    },
-    {
-        icon: <FontAwesomeIcon icon={faMoon} />,
-        title: 'Dark mode',
-    },
-];
-
 //Handle logic
 const handleMenuChange = (menuItem) => {
     switch (menuItem.type) {
@@ -77,83 +31,63 @@ const handleMenuChange = (menuItem) => {
     }
 };
 
-const userMenu = [
-    {
-        icon: <FontAwesomeIcon icon={faUser} />,
-        title: 'View profile',
-        to: '/@hoaa',
-    },
-    {
-        icon: <FontAwesomeIcon icon={faCoins} />,
-        title: 'Get coins',
-        to: '/coin',
-    },
-    {
-        icon: <FontAwesomeIcon icon={faGear} />,
-        title: 'Setting',
-        to: '/feedback',
-    },
-    ...MENU_ITEMS,
-    {
-        icon: <FontAwesomeIcon icon={faSignOut} />,
-        title: 'Log out',
-        to: '/feedback',
-        separate: true,
-    },
-];
+function Header({ onShowAuthModal }) {
+    const { curUser } = useContext(UserContext);
 
-function Header({ onShowModal }) {
-    const { curUser, setCurUser } = useContext(UserContext);
-    console.log(curUser);
+    const location = useLocation();
 
     return (
         <header className={cx('wrapper')}>
             <div className={cx('logo')}>
                 <Link to={config.routes.home}>
-                    <img src={images.logo} alt="" />
+                    <img src={images.logo} alt="" className={cx('tk-logo')} />
                 </Link>
+                {location.pathname === '/upload' ? <div className={cx('studio')}>Studio</div> : ''}
             </div>
 
             {/* Search */}
-            <Search />
+            {location.pathname === '/upload' ? null : <Search />}
 
             <div className={cx('action')}>
                 {Object.keys(curUser).length !== 0 ? (
                     <>
-                        <Button
-                            className={cx('upload-btn')}
-                            normal
-                            leftIcon={<FontAwesomeIcon icon={faPlus} />}
-                        >
-                            Upload
-                        </Button>
-                        <Tippy delay={[0, 200]} content="Messages" placement="bottom">
-                            <button className={cx('action-btn')}>
-                                <MessageIcon />
-                            </button>
-                        </Tippy>
-                        <Tippy delay={[0, 200]} content="Inbox" placement="bottom">
-                            <button className={cx('action-btn', 'inbox')}>
-                                <InboxIcon />
-                            </button>
-                        </Tippy>
+                        {location.pathname === '/upload' ? null : (
+                            <>
+                                <Button
+                                    className={cx('upload-btn')}
+                                    to={config.routes.upload}
+                                    normal
+                                    leftIcon={<FontAwesomeIcon icon={faPlus} />}
+                                >
+                                    Upload
+                                </Button>
+                                <Tippy delay={[0, 200]} content="Messages" placement="bottom">
+                                    <button className={cx('action-btn')}>
+                                        <MessageIcon />
+                                    </button>
+                                </Tippy>
+                                <Tippy delay={[0, 200]} content="Inbox" placement="bottom">
+                                    <button className={cx('action-btn', 'inbox')}>
+                                        <InboxIcon />
+                                        <span className={cx('inbox-nums')}>12</span>
+                                    </button>
+                                </Tippy>
+                            </>
+                        )}
                     </>
                 ) : (
                     <>
                         <Button
                             primary
                             onClick={() => {
-                                onShowModal();
+                                onShowAuthModal();
                             }}
                         >
                             Log in
                         </Button>
                     </>
                 )}
-                <Menu
-                    items={Object.keys(curUser).length !== 0 ? userMenu : MENU_ITEMS}
-                    onChange={handleMenuChange}
-                >
+                <Menu onChange={handleMenuChange}>
                     {Object.keys(curUser).length !== 0 ? (
                         <Image className={cx('avt')} src={curUser.avatar} alt="Nguyen Van A" />
                     ) : (

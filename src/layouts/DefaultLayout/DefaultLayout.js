@@ -5,35 +5,27 @@ import styles from './DefaultLayout.module.scss';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import Button from '~/components/Button';
-import Modal from '~/components/Modal';
+import { AuthModal } from '~/components/Modal';
 
 const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
-    const [isShowModal, setIsShowModal] = useState(false);
-    const [isLogin, setIsLogin] = useState(true);
+    const [isShowAuthModal, setIsShowAuthModal] = useState(false);
 
-    const handleOpenModal = () => {
-        setIsShowModal(true);
+    const handleOpenAuthModal = () => {
+        setIsShowAuthModal(true);
     };
 
     const handleCloseModal = () => {
-        setIsShowModal(false);
+        setIsShowAuthModal(false);
     };
-
-    const handleChangeIsLogin = () => setIsLogin(!isLogin);
 
     return (
         <div className={cx('wrapper')}>
-            <Modal
-                isOpen={isShowModal}
-                isLogin={isLogin}
-                onCloseModal={handleCloseModal}
-                onChangeIsLogin={handleChangeIsLogin}
-            />
-            <Header onShowModal={handleOpenModal} />
+            <AuthModal isOpen={isShowAuthModal} onCloseModal={handleCloseModal} />
+            <Header onShowAuthModal={handleOpenAuthModal} />
             <div className={cx('container')}>
-                <Sidebar onShowModal={handleOpenModal} />
+                <Sidebar onShowModal={handleOpenAuthModal} />
                 <div className={cx('content')}>{children}</div>
                 <Button rounded text className={cx('float-btn')}>
                     Get app

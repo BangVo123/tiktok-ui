@@ -1,19 +1,26 @@
 import classNames from 'classnames/bind';
-import styles from './Modal.module.scss';
+import styles from './AuthModal.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import Button from '../Button';
+import { useState } from 'react';
+import Button from '../../Button';
 import config from '~/config';
 
 const cx = classNames.bind(styles);
 
-function Modal({ isOpen, isLogin, onCloseModal, onChangeIsLogin }) {
-    let header, listBtn, footerTitle, navigateBtn;
-    if (isLogin) {
-        ({ header, listBtn, footerTitle, navigateBtn } = config.auth.login);
-    } else {
-        ({ header, listBtn, footerTitle, navigateBtn } = config.auth.signup);
-    }
+function Modal({ isOpen, onCloseModal }) {
+    const [isHandleLogin, setIsHandleLogin] = useState(true);
+    let { header, listBtn, footerTitle, navigateBtn } = config.auth.login;
+
+    const handleChange = () => {
+        if (isHandleLogin) {
+            ({ header, listBtn, footerTitle, navigateBtn } = config.auth.signup);
+            setIsHandleLogin(false);
+        } else {
+            ({ header, listBtn, footerTitle, navigateBtn } = config.auth.login);
+            setIsHandleLogin(true);
+        }
+    };
 
     if (!isOpen) return null;
 
@@ -63,7 +70,7 @@ function Modal({ isOpen, isLogin, onCloseModal, onChangeIsLogin }) {
 
                     <div className={cx('footer')}>
                         <span className={cx('footer-header')}>{footerTitle}</span>
-                        <button className={cx('navigate-btn')} onClick={onChangeIsLogin}>
+                        <button className={cx('navigate-btn')} onClick={handleChange}>
                             {navigateBtn}
                         </button>
                     </div>

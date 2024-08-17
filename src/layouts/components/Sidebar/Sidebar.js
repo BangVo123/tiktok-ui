@@ -20,11 +20,13 @@ import FollowingAccounts from '~/components/FollowingAccounts';
 import Footer from './Footer';
 import Button from '~/components/Button';
 import { UserContext } from '~/Provider/UserProvider';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Sidebar({ onShowModal }) {
     const { curUser, setCurUser } = useContext(UserContext);
+    const location = useLocation();
 
     return (
         <div className={cx('wrapper')}>
@@ -67,7 +69,17 @@ function Sidebar({ onShowModal }) {
                         title={'Profile'}
                         to={config.routes.profile}
                         icon={
-                            <UserIcon width="2.6rem" height="2.6rem" className={cx('menu-icon')} />
+                            <>
+                                {Object.keys(curUser).length !== 0 ? (
+                                    <img src={curUser.avatar} className={cx('menu-avt')} />
+                                ) : (
+                                    <UserIcon
+                                        width="2.6rem"
+                                        height="2.6rem"
+                                        className={cx('menu-icon')}
+                                    />
+                                )}
+                            </>
                         }
                         onClick={(e) => {
                             e.preventDefault();
@@ -77,23 +89,27 @@ function Sidebar({ onShowModal }) {
                 </Menu>
             </div>
 
-            {Object.keys(curUser).length !== 0 ? (
-                <FollowingAccounts lable="Following accounts" />
-            ) : (
-                <div className={cx('container')}>
-                    <h4 className={cx('title')}>
-                        Log in to follow creators, like videos, and view comments.
-                    </h4>
-                    <Button
-                        outline
-                        className={cx('btn')}
-                        onClick={() => {
-                            onShowModal();
-                        }}
-                    >
-                        Log in
-                    </Button>
-                </div>
+            {location.pathname === '/upload' ? null : (
+                <>
+                    {Object.keys(curUser).length !== 0 ? (
+                        <FollowingAccounts lable="Following accounts" />
+                    ) : (
+                        <div className={cx('container')}>
+                            <h4 className={cx('title')}>
+                                Log in to follow creators, like videos, and view comments.
+                            </h4>
+                            <Button
+                                outline
+                                className={cx('btn')}
+                                onClick={() => {
+                                    onShowModal();
+                                }}
+                            >
+                                Log in
+                            </Button>
+                        </div>
+                    )}
+                </>
             )}
             <Footer />
         </div>

@@ -1,11 +1,7 @@
 import HeadlessTippy from '@tippyjs/react/headless';
 import { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faCircleXmark,
-    faSpinner,
-    faMagnifyingGlass,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faSpinner, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import { useDebounce } from '~/hooks';
 import styles from './Search.module.scss';
@@ -60,18 +56,14 @@ function Search() {
 
     return (
         //Using a wrapper <div> or <span> tag around the reference element solves
-        //this by creating a new parent node context (tippyjs library   )
+        //this by creating a new parent node context (tippyjs library)
         <div>
             <HeadlessTippy
                 interactive
                 visible={showResult && searchResult.length > 0}
                 render={(attrs) => (
                     //tabindex: not allow using tab on keyboard to focus element
-                    <div
-                        className={cx('search-result')}
-                        tabIndex="-1"
-                        {...attrs}
-                    >
+                    <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                         <PoperWrapper>
                             <h4 className={cx('search-title')}>Accounts</h4>
                             {searchResult.map((result) => (
@@ -103,12 +95,7 @@ function Search() {
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
                     )}
-                    {loading && (
-                        <FontAwesomeIcon
-                            className={cx('loading')}
-                            icon={faSpinner}
-                        />
-                    )}
+                    {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
 
                     <button className={cx('search-btn')} onClick={handleSubmit}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} />

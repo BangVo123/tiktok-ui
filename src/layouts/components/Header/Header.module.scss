@@ -20,8 +20,50 @@
 }
 
 .logo {
-    padding-top: 16px;
+    display: flex;
+    align-items: center;
+    height: 100%;
     flex: 1;
+
+    & .tk-logo {
+        padding-top: 10px;
+    }
+
+    & .studio {
+        position: relative;
+        padding: 4px 10px;
+        margin-left: 20px;
+        border-radius: 4px;
+        font-size: 1.4rem;
+        font-weight: 700;
+        background-color: rgb(0, 0, 0);
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -1px;
+            height: 100%;
+            width: 6px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            background-color: rgb(37, 244, 238);
+            z-index: -1;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -2px;
+            height: 100%;
+            width: 6px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            background-color: var(--primary);
+            z-index: -1;
+        }
+    }
 }
 
 //action
@@ -34,6 +76,26 @@
 
 .upload-btn {
     margin-right: 24px;
+    margin-left: 12px;
+}
+
+.inbox {
+    position: relative;
+
+    & .inbox-nums {
+        position: absolute;
+        right: 8px;
+        top: 0;
+        width: 2rem;
+        height: 2rem;
+        background-color: var(--primary);
+        font-family: var(--font-family);
+        font-size: 1.2rem;
+        line-height: 2rem;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 50%;
+    }
 }
 
 .action-btn {
@@ -48,21 +110,21 @@
     justify-content: center;
     position: relative;
 
-    &.inbox::before {
-        content: '12';
-        position: absolute;
-        top: 0;
-        right: 8px;
-        width: 2rem;
-        height: 2rem;
-        background-color: var(--primary);
-        font-family: var(--font-family);
-        font-size: 1.2rem;
-        line-height: 2rem;
-        font-weight: 600;
-        text-align: center;
-        border-radius: 50%;
-    }
+    // &.inbox::before {
+    //     content: '12';
+    //     position: absolute;
+    //     top: 0;
+    //     right: 8px;
+    //     width: 2rem;
+    //     height: 2rem;
+    //     background-color: var(--primary);
+    //     font-family: var(--font-family);
+    //     font-size: 1.2rem;
+    //     line-height: 2rem;
+    //     font-weight: 600;
+    //     text-align: center;
+    //     border-radius: 50%;
+    // }
 }
 
 .more-btn {

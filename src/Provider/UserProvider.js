@@ -1,4 +1,4 @@
-import { createContext, useRef, useState } from 'react';
+import { createContext, useState } from 'react';
 
 const UserContext = createContext();
 
@@ -8,8 +8,8 @@ const UserProvider = ({ children }) => {
     return (
         <UserContext.Provider
             value={{
-                curUser: curUser,
-                setCurUser: setCurUser,
+                curUser,
+                setCurUser,
             }}
         >
             {children}
