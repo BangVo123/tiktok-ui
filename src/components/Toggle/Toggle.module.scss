@@ -1,0 +1,34 @@
+:root {
+    --toggle-width: 4.4rem;
+    --circle-width: 2rem;
+}
+
+.toggle-btn {
+    position: relative;
+    width: var(--toggle-width);
+    height: 2.4rem;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+
+    & .circle {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: var(--circle-width);
+        height: var(--circle-width);
+        border-radius: 50%;
+        background-color: var(--text-color-primary);
+        animation: 0.2s linear;
+    }
+
+    & .circle.active {
+        right: 2px;
+        left: auto;
+        animation: 0.2s linear;
+    }
+}
+
+.toggle-btn.active {
+    background-color: rgb(11, 224, 155);
+}

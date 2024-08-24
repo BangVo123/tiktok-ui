@@ -30,7 +30,9 @@
     top: 20px;
     left: 0;
     //Width = content - action bar - 2 side has padding
-    width: calc(100% - var(--action-bar-width) - calc(var(--content-padding) * 2));
+    width: calc(
+        100% - var(--action-bar-width) - calc(var(--content-padding) * 2)
+    );
     // padding left = content padding to push it into video
     padding: 4px 4px 0 calc(var(--content-padding) + 4px);
     z-index: 1;
@@ -92,55 +94,67 @@
         display: flex;
         align-items: center;
     }
-}
 
-.toggle-btn {
-    position: absolute;
-    right: 12px;
-    width: 4.4rem;
-    height: 2.4rem;
-    border-radius: 100px;
-    background-color: rgba(255, 255, 255, 0.12);
-
-    & .circle {
+    & .toggle {
         position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 2rem;
-        height: 2rem;
-        border-radius: 50%;
-        background-color: var(--text-color-primary);
-        animation: fadeLeft 0.4s linear;
-    }
-
-    & .circle.active {
-        right: 2px;
-        left: auto;
-        animation: fadeRight 0.4s linear;
-    }
-
-    @keyframes fadeRight {
-        from {
-            left: 2px;
-        }
-        to {
-            right: 2px;
-        }
-    }
-
-    @keyframes fadeLeft {
-        from {
-            right: 2px;
-        }
-        to {
-            left: 2px;
-        }
+        right: 1.2rem;
     }
 }
 
-.toggle-btn.active {
-    background-color: rgb(11, 224, 155);
-}
+// .toggle-btn {
+//     --toggle-width: 4.4rem;
+//     --circle-width: 2rem;
+//     position: absolute;
+//     right: 12px;
+//     width: var(--toggle-width);
+//     height: 2.4rem;
+//     border-radius: 100px;
+//     background-color: rgba(255, 255, 255, 0.12);
+
+//     & .circle {
+//         position: absolute;
+//         top: 2px;
+//         left: 2px;
+//         width: var(--circle-width);
+//         height: var(--circle-width);
+//         border-radius: 50%;
+//         background-color: var(--text-color-primary);
+//         animation: fadeLeft 0.2s linear;
+//     }
+
+//     & .circle.active {
+//         right: 2px;
+//         left: auto;
+//         animation: fadeRight 0.2s linear;
+//     }
+
+//     @keyframes fadeRight {
+//         // 0% {
+//         //     transform: translateX(0);
+//         // }
+//         100% {
+//             //2px padding left right, from central, circle only translate half
+//             transform: translateX(
+//                 calc(var(--toggle-width) - 2px - 2px - var(--circle-width))
+//             );
+//         }
+//     }
+
+//     @keyframes fadeLeft {
+//         // 0% {
+//         //     transform: translateX(
+//         //         calc(var(--toggle-width) - 2px - 2px - var(--circle-width))
+//         //     );
+//         // }
+//         100% {
+//             transform: translateX(0);
+//         }
+//     }
+// }
+
+// .toggle-btn.active {
+//     background-color: rgb(11, 224, 155);
+// }
 
 .video-container {
     position: relative;

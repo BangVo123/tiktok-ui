@@ -1,6 +1,8 @@
-import classNames from 'classnames';
-
-export const MessageIcon = ({ width = '2.8rem', height = '2.8rem', className }) => {
+export const MessageIcon = ({
+    width = '2.8rem',
+    height = '2.8rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -20,7 +22,11 @@ export const MessageIcon = ({ width = '2.8rem', height = '2.8rem', className }) 
     );
 };
 
-export const InboxIcon = ({ width = '3.2rem', height = '3.2rem', className }) => {
+export const InboxIcon = ({
+    width = '3.2rem',
+    height = '3.2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -42,7 +48,11 @@ export const InboxIcon = ({ width = '3.2rem', height = '3.2rem', className }) =>
 
 //Separate search icon, using fill is currentColor to use color form css when input has value, search icon will be light
 
-export const DefaultHomeIcon = ({ width = '3.2rem', height = '3.2rem', className }) => {
+export const DefaultHomeIcon = ({
+    width = '3.2rem',
+    height = '3.2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -61,7 +71,11 @@ export const DefaultHomeIcon = ({ width = '3.2rem', height = '3.2rem', className
         </svg>
     );
 };
-export const ActiveHomeIcon = ({ width = '3.2rem', height = '3.2rem', className }) => {
+export const ActiveHomeIcon = ({
+    width = '3.2rem',
+    height = '3.2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -81,7 +95,11 @@ export const ActiveHomeIcon = ({ width = '3.2rem', height = '3.2rem', className 
     );
 };
 
-export const DefaultCompassIcon = ({ width = '3.2rem', height = '3.2rem', className }) => {
+export const DefaultCompassIcon = ({
+    width = '3.2rem',
+    height = '3.2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -97,7 +115,11 @@ export const DefaultCompassIcon = ({ width = '3.2rem', height = '3.2rem', classN
         </svg>
     );
 };
-export const ActiveCompassIcon = ({ width = '3.2rem', height = '3.2rem', className }) => {
+export const ActiveCompassIcon = ({
+    width = '3.2rem',
+    height = '3.2rem',
+    className,
+}) => {
     return (
         <svg
             fill="currentColor"
@@ -114,7 +136,11 @@ export const ActiveCompassIcon = ({ width = '3.2rem', height = '3.2rem', classNa
     );
 };
 
-export const DefaultFollowIcon = ({ width = '2.6rem', height = '2.6rem', className }) => {
+export const DefaultFollowIcon = ({
+    width = '2.6rem',
+    height = '2.6rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -135,7 +161,11 @@ export const DefaultFollowIcon = ({ width = '2.6rem', height = '2.6rem', classNa
         </svg>
     );
 };
-export const ActiveFollowIcon = ({ width = '2.6rem', height = '2.6rem', className }) => {
+export const ActiveFollowIcon = ({
+    width = '2.6rem',
+    height = '2.6rem',
+    className,
+}) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +187,11 @@ export const ActiveFollowIcon = ({ width = '2.6rem', height = '2.6rem', classNam
     );
 };
 
-export const DefaultGroupUserIcon = ({ width = '3.2rem', height = '3.2rem', className }) => {
+export const DefaultGroupUserIcon = ({
+    width = '3.2rem',
+    height = '3.2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -186,7 +220,11 @@ export const DefaultGroupUserIcon = ({ width = '3.2rem', height = '3.2rem', clas
         </svg>
     );
 };
-export const ActiveGroupUserIcon = ({ width = '3.2rem', height = '3.2rem', className }) => {
+export const ActiveGroupUserIcon = ({
+    width = '3.2rem',
+    height = '3.2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -205,7 +243,11 @@ export const ActiveGroupUserIcon = ({ width = '3.2rem', height = '3.2rem', class
     );
 };
 
-export const DefaultLiveIcon = ({ width = '3.2rem', height = '3.2rem', className }) => {
+export const DefaultLiveIcon = ({
+    width = '3.2rem',
+    height = '3.2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -225,7 +267,11 @@ export const DefaultLiveIcon = ({ width = '3.2rem', height = '3.2rem', className
         </svg>
     );
 };
-export const ActiveLiveIcon = ({ width = '3.2rem', height = '3.2rem', className }) => {
+export const ActiveLiveIcon = ({
+    width = '3.2rem',
+    height = '3.2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -304,7 +350,11 @@ export const UserIcon = ({ width = '2rem', height = '2rem', className }) => {
     );
 };
 
-export const FacebookIcon = ({ width = '2rem', height = '2rem', className }) => {
+export const FacebookIcon = ({
+    width = '2rem',
+    height = '2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -327,7 +377,11 @@ export const FacebookIcon = ({ width = '2rem', height = '2rem', className }) => 
     );
 };
 
-export const FavoriteIcon = ({ width = '2.4rem', height = '2.4rem', className }) => {
+export const FavoriteIcon = ({
+    width = '2.4rem',
+    height = '2.4rem',
+    className,
+}) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -349,7 +403,11 @@ export const FavoriteIcon = ({ width = '2.4rem', height = '2.4rem', className })
     );
 };
 
-export const AutoScrollIcon = ({ width = '2rem', height = '2rem', className }) => {
+export const AutoScrollIcon = ({
+    width = '2rem',
+    height = '2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -366,7 +424,11 @@ export const AutoScrollIcon = ({ width = '2rem', height = '2rem', className }) =
     );
 };
 
-export const HeartBrokenIcon = ({ width = '2rem', height = '2rem', className }) => {
+export const HeartBrokenIcon = ({
+    width = '2rem',
+    height = '2rem',
+    className,
+}) => {
     return (
         <svg
             className={className}
@@ -392,6 +454,187 @@ export const FlagIcon = ({ width = '2rem', height = '2rem', className }) => {
             fill="currentColor"
         >
             <path d="M9 9.31v17.75c5.27-1.73 11.45-2.05 16.16 1.31 4.03 2.88 9.52 2.01 13.84.32V10.94c-5.27 1.73-11.45 2.05-16.16-1.31-4-2.86-9.53-2.01-13.84-.32M43 8v22a2 2 0 0 1-1.1 1.79c-5.83 2.9-13.5 3.82-19.06-.16C18.8 28.75 13.32 29.6 9 31.3V44a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8c0-.75.44-1.45 1.1-1.79 5.75-2.87 13.62-3.73 19.06.16 4.37 3.13 10.43 2.04 14.95-.16C41.4 5.56 43 6.54 43 8"></path>
+        </svg>
+    );
+};
+
+export const FeedbackIcon = ({
+    width = '2.4rem',
+    height = '2.4rem',
+    className,
+}) => {
+    return (
+        <svg
+            width={width}
+            height={height}
+            className={className}
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <g>
+                <path fill="none" d="M0 0h24v24H0z" />
+                <path d="M6.455 19L2 22.5V4a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6.455zM4 18.385L5.763 17H20V5H4v13.385zM11 13h2v2h-2v-2zm0-6h2v5h-2V7z" />
+            </g>
+        </svg>
+    );
+};
+
+export const CloudUp = ({ width = '7.2rem', height = '7.2rem', className }) => {
+    return (
+        <svg
+            className={className}
+            fill="currentColor"
+            viewBox="0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height={height}
+        >
+            <path d="M25.84 37h8.66a9.5 9.5 0 0 0 1.35-18.9A12 12 0 0 0 12 20v.01A8.5 8.5 0 0 0 12.5 37h10.34V25.6l-1.72 1.74a1 1 0 0 1-1.42 0l-.7-.7a1 1 0 0 1 0-1.41l4.4-4.4c.68-.76 1.22-.77 2 .08l4.28 4.32a1 1 0 0 1 0 1.4l-.7.72a1 1 0 0 1-1.42 0l-1.72-1.75V37Z"></path>
+        </svg>
+    );
+};
+
+export const ResolutionIcon = ({
+    width = '2.4rem',
+    height = '2.4rem',
+    className,
+}) => {
+    return (
+        // <svg
+        //     className={className}
+        //     width={height}
+        //     height={width}
+        //     viewBox="0 0 24 24"
+        //     fill="none"
+        //     xmlns="http://www.w3.org/2000/svg"
+        // >
+        //     <path
+        //         d="M3 7V12M3 17L3 12M3 12H10M10 12L10 7M10 12L10 17"
+        //         stroke="currentColor"
+        //         strokeWidth="1.5"
+        //         strokeLinecap="round"
+        //         strokeLinejoin="round"
+        //     />
+        //     <path
+        //         d="M13 12V7C17 7 21 7 21 12C21 17 17 17 13 17V12Z"
+        //         stroke="currentColor"
+        //         strokeWidth="1.5"
+        //         strokeLinecap="round"
+        //         strokeLinejoin="round"
+        //     />
+        // </svg>
+        <svg
+            className={className}
+            fill="currentColor"
+            width={width}
+            height={height}
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M1,8V4A1,1,0,0,1,2,3H8A1,1,0,0,1,8,5H3V8A1,1,0,0,1,1,8ZM22,3H16a1,1,0,0,0,0,2h5V8a1,1,0,0,0,2,0V4A1,1,0,0,0,22,3ZM2,21H8a1,1,0,0,0,0-2H3V16a1,1,0,0,0-2,0v4A1,1,0,0,0,2,21Zm20-6a1,1,0,0,0-1,1v3H16a1,1,0,0,0,0,2h6a1,1,0,0,0,1-1V16A1,1,0,0,0,22,15Zm-4,2H6a1,1,0,0,1-1-1V8A1,1,0,0,1,6,7H18a1,1,0,0,1,1,1v8A1,1,0,0,1,18,17ZM17,9H7v6H17Z" />
+        </svg>
+    );
+};
+
+export const RatioIcon = ({ width = '2rem', height = '2rem', className }) => {
+    return (
+        <svg
+            className={className}
+            width={width}
+            height={height}
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M4 6V12H6V8L10 8V6H4Z" />
+            <path d="M20 18H14V16H18V12H20V18Z" />
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M4 2C1.79086 2 0 3.79086 0 6V18C0 20.2091 1.79086 22 4 22H20C22.2091 22 24 20.2091 24 18V6C24 3.79086 22.2091 2 20 2H4ZM20 4H4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V6C22 4.89543 21.1046 4 20 4Z"
+            />
+        </svg>
+    );
+};
+
+export const CameraVideoIcon = ({
+    width = '2.4rem',
+    height = '2.4rem',
+    className,
+}) => {
+    return (
+        <svg
+            className={className}
+            width={width}
+            height={height}
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+        >
+            <path
+                fillRule="evenodd"
+                d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z"
+            />
+        </svg>
+    );
+};
+
+export const VideoFileIcon = ({
+    width = '2rem',
+    height = '2rem',
+    className,
+}) => {
+    return (
+        <svg
+            className={className}
+            height={height}
+            width={width}
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+        >
+            <g>
+                <path
+                    d="M378.409,0H208.294h-13.176l-9.314,9.314L57.017,138.102l-9.315,9.314v13.176v265.513
+		c0,47.361,38.528,85.896,85.896,85.896h244.811c47.361,0,85.888-38.535,85.888-85.896V85.895C464.298,38.528,425.77,0,378.409,0z
+		 M432.494,426.104c0,29.877-24.214,54.092-54.084,54.092H133.598c-29.877,0-54.091-24.215-54.091-54.092V160.591h83.717
+		c24.884,0,45.07-20.179,45.07-45.07V31.804h170.115c29.87,0,54.084,24.214,54.084,54.091V426.104z"
+                />
+                <path
+                    d="M228.222,229.171c-0.705-0.406-1.557-0.426-2.262-0.035c-0.712,0.391-1.117,1.131-1.117,1.948v56.73v56.752
+		c0,0.817,0.405,1.544,1.117,1.928c0.705,0.412,1.557,0.391,2.262,0l95.042-56.766c0.677-0.405,1.082-1.131,1.082-1.914
+		c0-0.775-0.404-1.522-1.082-1.906L228.222,229.171z"
+                />
+            </g>
+        </svg>
+    );
+};
+
+export const CapCutIcon = ({ width = '2rem', height = '2rem', className }) => {
+    return (
+        <svg
+            className={className}
+            width={width}
+            height={height}
+            viewBox="0 0 192 192"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+        >
+            <path
+                stroke="#000000"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="12"
+                d="M170 42 22 124v14c0 6.627 5.373 12 12 12h78c6.627 0 12-5.373 12-12v-9.5"
+            />
+            <path
+                stroke="#000000"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="12"
+                d="M170 150 22 68V54c0-6.627 5.373-12 12-12h78c6.627 0 12 5.373 12 12v9.5"
+            />
         </svg>
     );
 };

@@ -1,12 +1,12 @@
 .wrapper {
-    position: absolute;
+    position: fixed;
     top: var(--default-layout-header-height);
     left: 0;
     width: var(--sidebar-width);
     height: calc(100vh - var(--default-layout-header-height));
     padding: 20px 0 16px 8px;
     background-color: rgb(18, 18, 18);
-    overflow-y: auto;
+    overflow-y: overlay;
     z-index: 1;
 }
 
@@ -31,5 +31,41 @@
 }
 
 .menu-avt {
+    width: 3.2rem;
+    height: 3.2rem;
     border-radius: 50%;
+}
+
+//sidebar for upload page
+.back-btn {
+    margin-top: 36px;
+    padding: 12px 0 12px 8px;
+    display: block;
+    font-weight: 600;
+
+    &:hover {
+        background-color: inherit;
+    }
+}
+
+.separate {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer {
+    margin-top: 12px;
+    padding: 0 8px;
+    font-size: 1.2rem;
+    color: var(--text-color-secondary);
+
+    & .link {
+        width: 100%;
+        padding: 10px 0;
+        display: block;
+    }
+
+    & .copyright {
+        display: block;
+        padding-top: 8px;
+    }
 }

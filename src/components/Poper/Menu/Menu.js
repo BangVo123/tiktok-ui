@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 const defaultFn = () => {};
 
 function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
-    const { curUser } = useContext(UserContext);
+    const { curUser, path } = useContext(UserContext);
 
     const [history, setHistory] = useState([{ data: config.headerMenu.PUBLIC_MENU_ITEMS }]);
     const current = history[history.length - 1];
@@ -34,9 +34,13 @@ function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
         if (Object.keys(curUser).length === 0) {
             setHistory([{ data: config.headerMenu.PUBLIC_MENU_ITEMS }]);
         } else {
-            setHistory([{ data: config.headerMenu.PRIVATE_MENU_ITEM }]);
+            if (path === '/upload') {
+                setHistory([{ data: config.headerMenu.UPLOAD_MENU }]);
+            } else {
+                setHistory([{ data: config.headerMenu.PRIVATE_MENU_ITEM }]);
+            }
         }
-    }, [curUser]);
+    }, [curUser, path]);
 
     const renderItem = () => {
         return current.data.map((item, idx) => {

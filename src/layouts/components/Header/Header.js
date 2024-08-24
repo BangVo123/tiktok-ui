@@ -32,26 +32,24 @@ const handleMenuChange = (menuItem) => {
 };
 
 function Header({ onShowAuthModal }) {
-    const { curUser } = useContext(UserContext);
-
-    const location = useLocation();
+    const { curUser, path } = useContext(UserContext);
 
     return (
         <header className={cx('wrapper')}>
-            <div className={cx('logo')}>
+            <div className={cx('logo')} tabIndex={-1}>
                 <Link to={config.routes.home}>
                     <img src={images.logo} alt="" className={cx('tk-logo')} />
                 </Link>
-                {location.pathname === '/upload' ? <div className={cx('studio')}>Studio</div> : ''}
+                {path === '/upload' ? <div className={cx('studio')}>Studio</div> : ''}
             </div>
 
             {/* Search */}
-            {location.pathname === '/upload' ? null : <Search />}
+            {path === '/upload' ? null : <Search />}
 
             <div className={cx('action')}>
                 {Object.keys(curUser).length !== 0 ? (
                     <>
-                        {location.pathname === '/upload' ? null : (
+                        {path === '/upload' ? null : (
                             <>
                                 <Button
                                     className={cx('upload-btn')}
