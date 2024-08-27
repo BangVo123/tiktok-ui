@@ -11,7 +11,7 @@ function Radio({ label, name, current, onClick, className }) {
                 type="radio"
                 className={cx('input')}
                 name={name}
-                checked={current === label}
+                defaultChecked={current === label}
                 onClick={onClick}
                 value={label}
             />

@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, forwardRef } from 'react';
 import classNames from 'classnames/bind';
 import HeadLessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react';
@@ -32,7 +32,7 @@ import VideoUpload from '../VideoUpload';
 
 const cx = classNames.bind(styles);
 
-function EditFile() {
+function EditFile(props, ref) {
     const [state, dispatch] = useReducer(reducer, initState);
 
     const handleClick = (e) => {
@@ -77,9 +77,9 @@ function EditFile() {
         });
     };
 
-    useEffect(() => {
-        console.log(state);
-    }, [state]);
+    // useEffect(() => {
+    //     console.log(state);
+    // }, [state]);
     //use useEffect to set initial value for text area
 
     return (
@@ -408,7 +408,7 @@ function EditFile() {
                         </div>
                     </div>
                     <div className={cx('preview')}>
-                        <Preview />
+                        <Preview ref={ref} />
                     </div>
                 </div>
             </div>
@@ -416,4 +416,4 @@ function EditFile() {
     );
 }
 
-export default EditFile;
+export default forwardRef(EditFile);

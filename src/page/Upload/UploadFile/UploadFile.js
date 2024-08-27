@@ -14,7 +14,7 @@ function UploadFile({ setFile }) {
         inputRef.current.click();
     };
     const handleGetData = () => {
-        setFile({ ...inputRef.current.files });
+        setFile(inputRef.current.files[0]);
     };
 
     return (

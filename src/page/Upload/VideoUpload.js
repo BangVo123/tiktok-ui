@@ -15,7 +15,7 @@ function VideoUpload({ handleGetData, onInput, full = true }, ref) {
                 accept="video/*"
                 ref={ref}
                 style={{ display: 'none' }}
-                onInput={handleGetData}
+                onChange={handleGetData}
             />
             <div
                 className={cx('upload', { 'flex-box': !full })}
