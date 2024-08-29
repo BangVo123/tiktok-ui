@@ -22,6 +22,7 @@
 .desc {
     font-size: 1.4rem;
     font-weight: 400;
+    opacity: 0.6;
 }
 
 .value {
@@ -35,33 +36,17 @@
 }
 
 .progress {
-    display: flex;
-    justify-content: space-between;
     margin-top: 2.4rem;
     margin-bottom: -2.4rem;
+    font-size: 1.6rem;
 
     & .state {
+        color: rgb(250, 206, 21);
+    }
+
+    & .state.success {
         color: #00c39c;
-        font-size: 1.6rem;
-
-        & .check-icon {
-            margin-right: 1.2rem;
-            font-size: 2rem;
-        }
     }
-
-    & .percent {
-        font-size: 2.4rem;
-    }
-}
-
-.progress-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #00c39c;
 }
 
 .edit {
@@ -94,7 +79,8 @@
     }
 
     & .edt-cover {
-        width: 140px;
+        aspect-ratio: 9 / 16;
+        // width: 140px;
         height: 200px;
         margin-top: 1.2rem;
         border-radius: 4px;

@@ -1,6 +1,9 @@
 export const initState = {
     isReplace: false,
-    process: 1,
+    name: '',
+    size: '0',
+    duration: '',
+    progress: false,
     desc: '',
     numsDesc: 0,
     see: 'Followers',
@@ -13,7 +16,12 @@ export const initState = {
 };
 
 export const ON_REPLACE = 'onReplay';
+export const SET_NAME = 'setName';
+export const SET_SIZE = 'setSize';
+export const SET_DURATION = 'setDuration';
+export const ON_SUCCESS = 'onSuccess';
 export const ON_CHANGE = 'onChange';
+export const SET_DESC = 'setDesc';
 export const ADD_SPECIAL = 'addSpecial';
 export const CHANGE_SEE_OPTION = 'changeSeeOption';
 export const CHANGE_TIME_UPLOAD = 'changeTimeUpload';
@@ -30,7 +38,33 @@ const reducer = (state, action) => {
                 ...state,
                 isReplace: !state.isReplace,
             };
+        case SET_NAME:
+            return {
+                ...state,
+                name: action.value,
+            };
+        case SET_SIZE:
+            return {
+                ...state,
+                size: action.value,
+            };
+        case SET_DURATION:
+            return {
+                ...state,
+                duration: action.value,
+            };
+        case ON_SUCCESS:
+            return {
+                ...state,
+                progress: true,
+            };
         case ON_CHANGE:
+            return {
+                ...state,
+                desc: action.value,
+                numsDesc: action.value.length,
+            };
+        case SET_DESC:
             return {
                 ...state,
                 desc: action.value,

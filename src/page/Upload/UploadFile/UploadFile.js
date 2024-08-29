@@ -13,7 +13,7 @@ function UploadFile({ setFile }) {
     const onInput = () => {
         inputRef.current.click();
     };
-    const handleGetData = () => {
+    const handleGetData = async () => {
         setFile(inputRef.current.files[0]);
     };
 

@@ -60,6 +60,7 @@ function Preview(props, ref) {
                             src=""
                             ref={ref}
                             autoPlay
+                            loop
                             muted={false}
                             className={cx('video')}
                         />

@@ -1,4 +1,4 @@
-import { useReducer, useEffect, forwardRef } from 'react';
+import { useReducer, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import HeadLessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react';
@@ -8,12 +8,16 @@ import {
     faExclamation,
     faRotate,
 } from '@fortawesome/free-solid-svg-icons';
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 
 import reducer, {
     initState,
     ON_REPLACE,
+    SET_NAME,
+    SET_SIZE,
+    SET_DURATION,
+    ON_SUCCESS,
     ON_CHANGE,
+    SET_DESC,
     CHANGE_SEE_OPTION,
     CHANGE_TIME_UPLOAD,
     TOGGLE_COPYRIGHT,
@@ -29,10 +33,15 @@ import { Radio } from '~/components/Input';
 import Toggle from '~/components/Toggle';
 import Preview from '../Preview';
 import VideoUpload from '../VideoUpload';
+import * as httpRequest from '~/utils/httpRequest';
+import convert from '~/utils/sizeConvert';
+import { getDuration, convertDuration } from '~/utils/getDuration';
 
 const cx = classNames.bind(styles);
 
-function EditFile(props, ref) {
+function EditFile(props) {
+    const [uploadInfo, setUploadInfo] = useState();
+    const videoRef = useRef();
     const [state, dispatch] = useReducer(reducer, initState);
 
     const handleClick = (e) => {
@@ -77,10 +86,53 @@ function EditFile(props, ref) {
         });
     };
 
-    // useEffect(() => {
-    //     console.log(state);
-    // }, [state]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                dispatch({ type: SET_NAME, value: props.file.name });
+                dispatch({ type: SET_SIZE, value: convert(props.file.size) });
+                const duration = await getDuration(props.file);
+                dispatch({
+                    type: SET_DURATION,
+                    value: convertDuration(duration),
+                });
+                dispatch({
+                    type: SET_DESC,
+                    value: props.file.name.split('.')[0],
+                });
+                videoRef.current.src = URL.createObjectURL(
+                    new Blob([props.file], { type: 'video/mp4' }),
+                );
+
+                const data = new FormData();
+                data.append('file', props.file);
+                const result = await httpRequest.post('/upload', data, {
+                    withCredentials: true,
+                });
+                dispatch({ type: ON_SUCCESS });
+
+                setUploadInfo(result.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
     //use useEffect to set initial value for text area
+
+    const handleSubmit = async () => {
+        try {
+            const data = { ...uploadInfo };
+            data['content'] = state.desc;
+            const result = await httpRequest.post('/video', data, {
+                withCredentials: true,
+            });
+            console.log(result);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     return (
         <>
@@ -91,7 +143,7 @@ function EditFile(props, ref) {
                 ) : (
                     <>
                         <header className={cx('header')}>
-                            <h3 className={cx('name')}>ABC</h3>
+                            <h3 className={cx('name')}>{state.name}</h3>
                             <Button
                                 primary
                                 leftIcon={<FontAwesomeIcon icon={faRotate} />}
@@ -102,21 +154,21 @@ function EditFile(props, ref) {
                         </header>
                         <div>
                             <span className={cx('desc')}>Size:</span>
-                            <span className={cx('value')}>1kb</span>
+                            <span className={cx('value')}>{state.size}</span>
                             <span className={cx('desc')}>Duration:</span>
-                            <span className={cx('value')}>0m5s</span>
+                            <span className={cx('value')}>
+                                {state.duration}
+                            </span>
                         </div>
                         <div className={cx('progress')}>
-                            <span className={cx('state')}>
-                                <FontAwesomeIcon
-                                    icon={faCircleCheck}
-                                    className={cx('check-icon')}
-                                />
-                                Uploaded
+                            <span
+                                className={cx('state', {
+                                    success: state.progress,
+                                })}
+                            >
+                                {state.progress ? 'Uploaded' : 'Uploading...'}
                             </span>
-                            <span className={cx('percent')}>100%</span>
                         </div>
-                        <div className={cx('progress-bar')}></div>
                     </>
                 )}
             </div>
@@ -132,6 +184,7 @@ function EditFile(props, ref) {
                                 <textarea
                                     className={cx('input')}
                                     spellCheck={false}
+                                    value={state.desc}
                                     placeholder="Share more about video here..."
                                     onChange={(e) => onChange(e)}
                                 />
@@ -396,7 +449,11 @@ function EditFile(props, ref) {
                             <span className={cx('divider')}></span>
                         </div>
                         <div className={cx('footer')}>
-                            <Button className={cx('footer-btn')} primary>
+                            <Button
+                                className={cx('footer-btn')}
+                                primary
+                                onClick={handleSubmit}
+                            >
                                 Post
                             </Button>
                             <Button className={cx('footer-btn')} normal>
@@ -408,7 +465,7 @@ function EditFile(props, ref) {
                         </div>
                     </div>
                     <div className={cx('preview')}>
-                        <Preview ref={ref} />
+                        <Preview ref={videoRef} />
                     </div>
                 </div>
             </div>
@@ -416,4 +473,4 @@ function EditFile(props, ref) {
     );
 }
 
-export default forwardRef(EditFile);
+export default EditFile;
