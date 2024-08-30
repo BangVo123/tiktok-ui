@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { useRef } from 'react';
 import classNames from 'classnames/bind';
 import { CloudUp } from '~/components/Icons';
 import styles from './Upload.module.scss';
@@ -7,19 +7,28 @@ import config from '~/config';
 
 const cx = classNames.bind(styles);
 
-function VideoUpload({ handleGetData, onInput, full = true }, ref) {
+function VideoUpload({ setFile, full = true, cb = () => {} }) {
+    const inputRef = useRef();
+
+    const triggerInputClick = () => {
+        inputRef.current.click();
+    };
+
     return (
         <div className={cx('content')}>
             <input
                 type="file"
                 accept="video/*"
-                ref={ref}
+                ref={inputRef}
                 style={{ display: 'none' }}
-                onChange={handleGetData}
+                onChange={() => {
+                    setFile(inputRef.current.files[0]);
+                    cb();
+                }}
             />
             <div
                 className={cx('upload', { 'flex-box': !full })}
-                onClick={onInput}
+                onClick={triggerInputClick}
             >
                 <CloudUp />
                 <span className={cx('title-wrapper')}>
@@ -57,4 +66,4 @@ function VideoUpload({ handleGetData, onInput, full = true }, ref) {
     );
 }
 
-export default forwardRef(VideoUpload);
+export default VideoUpload;

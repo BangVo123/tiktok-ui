@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Upload.module.scss';
 import UploadFile from './UploadFile';
@@ -14,7 +14,7 @@ function Upload() {
             {!file ? (
                 <UploadFile setFile={setFile} />
             ) : (
-                <EditFile file={file} />
+                <EditFile file={file} setFile={setFile} />
             )}
         </div>
     );

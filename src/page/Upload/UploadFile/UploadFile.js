@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import classNames from 'classnames/bind';
 import styles from './UploadFile.module.scss';
 import { CapCutIcon } from '~/components/Icons';
@@ -8,23 +7,10 @@ import VideoUpload from '../VideoUpload';
 const cx = classNames.bind(styles);
 
 function UploadFile({ setFile }) {
-    const inputRef = useRef();
-
-    const onInput = () => {
-        inputRef.current.click();
-    };
-    const handleGetData = async () => {
-        setFile(inputRef.current.files[0]);
-    };
-
     return (
         <>
             <div className={cx('container')}>
-                <VideoUpload
-                    ref={inputRef}
-                    handleGetData={handleGetData}
-                    onInput={onInput}
-                />
+                <VideoUpload setFile={setFile} />
             </div>
             <div className={cx('advance')}>
                 <div className={cx('advance-content')}>

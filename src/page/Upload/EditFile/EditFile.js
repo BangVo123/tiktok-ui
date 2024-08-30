@@ -41,7 +41,7 @@ const cx = classNames.bind(styles);
 
 function EditFile(props) {
     const [uploadInfo, setUploadInfo] = useState();
-    const videoRef = useRef();
+    const videoPreviewRef = useRef();
     const [state, dispatch] = useReducer(reducer, initState);
 
     const handleClick = (e) => {
@@ -57,6 +57,10 @@ function EditFile(props) {
 
     const onChange = (e) => {
         dispatch({ type: ON_CHANGE, value: e.target.value });
+    };
+
+    const handleToggleInput = () => {
+        dispatch({ type: ON_REPLACE });
     };
 
     const handleSetTime = (e) => {
@@ -100,7 +104,7 @@ function EditFile(props) {
                     type: SET_DESC,
                     value: props.file.name.split('.')[0],
                 });
-                videoRef.current.src = URL.createObjectURL(
+                videoPreviewRef.current.src = URL.createObjectURL(
                     new Blob([props.file], { type: 'video/mp4' }),
                 );
 
@@ -118,17 +122,23 @@ function EditFile(props) {
         };
 
         fetchData();
-    }, []);
-    //use useEffect to set initial value for text area
+    }, [props.file]);
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
         try {
-            const data = { ...uploadInfo };
-            data['content'] = state.desc;
-            const result = await httpRequest.post('/video', data, {
-                withCredentials: true,
-            });
-            console.log(result);
+            e.preventDefault();
+            if (!state.progress) {
+                alert('Please wait until video uploaded');
+            } else {
+                const data = { ...uploadInfo };
+                data['content'] = state.desc;
+                const result = await httpRequest.post('/video', data, {
+                    withCredentials: true,
+                });
+                console.log(result);
+                props.setFile();
+                alert('Video upload success');
+            }
         } catch (err) {
             console.log(err);
         }
@@ -138,8 +148,11 @@ function EditFile(props) {
         <>
             <div className={cx('container')}>
                 {state.isReplace ? (
-                    //handle onclick and set file again
-                    <VideoUpload full={false} />
+                    <VideoUpload
+                        full={false}
+                        setFile={props.setFile}
+                        cb={handleToggleInput}
+                    />
                 ) : (
                     <>
                         <header className={cx('header')}>
@@ -147,7 +160,7 @@ function EditFile(props) {
                             <Button
                                 primary
                                 leftIcon={<FontAwesomeIcon icon={faRotate} />}
-                                onClick={() => dispatch({ type: ON_REPLACE })}
+                                onClick={handleToggleInput}
                             >
                                 Replace
                             </Button>
@@ -452,7 +465,7 @@ function EditFile(props) {
                             <Button
                                 className={cx('footer-btn')}
                                 primary
-                                onClick={handleSubmit}
+                                onClick={(e) => handleSubmit(e)}
                             >
                                 Post
                             </Button>
@@ -465,7 +478,7 @@ function EditFile(props) {
                         </div>
                     </div>
                     <div className={cx('preview')}>
-                        <Preview ref={videoRef} />
+                        <Preview ref={videoPreviewRef} />
                     </div>
                 </div>
             </div>
