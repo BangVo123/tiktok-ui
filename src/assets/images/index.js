@@ -1,6 +1,6 @@
 const images = {
     logo: require('./logo.svg').default,
-    noImage: require('./no-image.png'),
+    noImage: require('./placeholder.png'),
     banner: require('./banner.png'),
 };
 

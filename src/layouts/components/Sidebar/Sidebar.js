@@ -30,11 +30,15 @@ import {
     faListUl,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useModal } from '~/Provider/ModalProvider';
+import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
 function Sidebar({ onShowModal }) {
     const { curUser, path } = useContext(UserContext);
+    const { onOpenModal } = useModal();
+
     const handleEmptyFunction = (e) => {
         e.preventDefault();
         alert('This function is not currently supported.');
@@ -85,8 +89,8 @@ function Sidebar({ onShowModal }) {
                                 icon={
                                     <>
                                         {Object.keys(curUser).length !== 0 ? (
-                                            <img
-                                                src={curUser.avatar}
+                                            <Image
+                                                src={curUser?.avatar}
                                                 className={cx('menu-avt')}
                                                 alt=""
                                             />
@@ -101,7 +105,7 @@ function Sidebar({ onShowModal }) {
                                 }
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    onShowModal();
+                                    onOpenModal();
                                 }}
                             />
                         </Menu>
@@ -118,9 +122,7 @@ function Sidebar({ onShowModal }) {
                             <Button
                                 outline
                                 className={cx('btn')}
-                                onClick={() => {
-                                    onShowModal();
-                                }}
+                                onClick={onOpenModal}
                             >
                                 Log in
                             </Button>

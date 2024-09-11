@@ -6,14 +6,16 @@ const auth = {
         listBtn: [
             {
                 Icon: UserIcon,
-                title: 'Use phone or email',
-                onclick: () => {},
+                title: 'Use email',
             },
             {
                 Icon: FacebookIcon,
                 title: 'Continue with Facebook',
                 onclick: () => {
-                    window.open(process.env.REACT_APP_FACEBOOK_AUTH_URL, '_self');
+                    window.open(
+                        process.env.REACT_APP_FACEBOOK_AUTH_URL,
+                        '_self',
+                    );
                 },
             },
             {
@@ -32,14 +34,16 @@ const auth = {
         listBtn: [
             {
                 Icon: UserIcon,
-                title: 'Use phone / email',
-                onclick: () => {},
+                title: 'Use email',
             },
             {
                 Icon: FacebookIcon,
                 title: 'Continue with Facebook',
                 onclick: () => {
-                    window.open(process.env.REACT_APP_FACEBOOK_AUTH_URL, '_self');
+                    window.open(
+                        process.env.REACT_APP_FACEBOOK_AUTH_URL,
+                        '_self',
+                    );
                 },
             },
             {

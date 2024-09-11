@@ -3,6 +3,7 @@ import about from './about';
 import auth from './auth';
 import headerMenu from './headerMenu';
 import uploadInfo from './uploadInfo';
+import specialCharacterRegex from './specialCharacter';
 
 const config = {
     routes,
@@ -10,6 +11,7 @@ const config = {
     auth,
     headerMenu,
     uploadInfo,
+    specialCharacterRegex,
 };
 
 export default config;

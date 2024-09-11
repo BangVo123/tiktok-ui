@@ -8,6 +8,7 @@ import {
     faExclamation,
     faRotate,
 } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 import reducer, {
     initState,
@@ -128,7 +129,7 @@ function EditFile(props) {
         try {
             e.preventDefault();
             if (!state.progress) {
-                alert('Please wait until video uploaded');
+                toast.warning('Video uploading... Please wait!');
             } else {
                 const data = { ...uploadInfo };
                 data['content'] = state.desc;
@@ -137,7 +138,7 @@ function EditFile(props) {
                 });
                 console.log(result);
                 props.setFile();
-                alert('Video upload success');
+                toast.success('Upload video success');
             }
         } catch (err) {
             console.log(err);

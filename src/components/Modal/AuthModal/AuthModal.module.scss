@@ -1,18 +1,20 @@
 .wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
-    animation: growUp linear 0.2s;
-    will-change: opacity transform;
+    z-index: 10;
 }
 
-@keyframes growUp {
+@keyframes shirk {
     from {
-        opacity: 0;
-        transform: scale(0);
-    }
-    to {
         opacity: 1;
         transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.3);
     }
 }
 
@@ -41,13 +43,26 @@
 }
 
 .content {
-    width: 30vw;
+    width: 32vw;
     min-width: 450px;
     max-height: 80vh;
     background-color: #252525;
     color: var(--text-color-primary);
     border-radius: 8px;
     text-align: center;
+    animation: growUp linear 0.2s;
+    will-change: opacity transform;
+}
+
+@keyframes growUp {
+    from {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .close-btn {
@@ -83,6 +98,7 @@
         color: var(--text-color-secondary);
     }
 }
+//auth content
 
 .list-btn {
     padding: 32px 0 12px 0;
@@ -117,6 +133,7 @@
 }
 
 .footer {
+    height: 7rem;
     padding: 24px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
     font-size: 1.6rem;
@@ -130,6 +147,183 @@
         cursor: pointer;
 
         &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Sign up content
+input[type='password']::-ms-reveal,
+input[type='password']::-ms-clear {
+    display: none;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-height: 40vh;
+    margin-top: 2rem;
+    padding-bottom: 6px;
+    overflow-y: overlay;
+
+    & .content-title {
+        text-align: left;
+    }
+
+    & .input {
+        flex-shrink: 0;
+        height: 4rem;
+        padding: 4px 8px;
+        font-size: 1.6rem;
+        margin: 10px 0 4px 0;
+        border-radius: 2px;
+
+        &.input-with-btn {
+            flex: 1;
+        }
+    }
+
+    & .password-require {
+        text-align: left;
+        display: none;
+
+        &.visible {
+            display: block;
+        }
+
+        & .require-header {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin: 6px 0;
+        }
+    }
+
+    .require-title {
+        display: none;
+        font-size: 1.2rem;
+        font-weight: 400;
+        margin: 4px 0;
+        text-align: left;
+        color: rgba(255, 255, 255, 0.75);
+
+        &.visible {
+            display: block;
+        }
+
+        & .check-icon {
+            margin-right: 4px;
+            opacity: 0;
+
+            &.valid {
+                opacity: 1;
+            }
+        }
+
+        &.valid {
+            color: rgb(11, 224, 155);
+        }
+
+        &.invalid {
+            color: rgb(255, 76, 58);
+        }
+
+        &.focus.invalid {
+            color: rgba(255, 255, 255, 0.75);
+        }
+    }
+
+    & .group {
+        display: flex;
+        margin-top: 1rem;
+        position: relative;
+
+        & .input-with-btn {
+            margin-top: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.04);
+
+            &::-webkit-textfield-decoration-container {
+                display: none;
+            }
+        }
+
+        & .pass-input {
+            padding-right: 4.6rem;
+        }
+
+        & .show-pass-wrapper {
+            height: 4rem;
+            width: 4rem;
+            // background-color: #ccc;
+            padding: 0 6px;
+            position: absolute;
+            right: 0;
+            cursor: pointer;
+
+            & .show-pass-icon {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                size: 2rem;
+                color: #404040;
+            }
+        }
+
+        & .btn-send-code {
+            font-size: 1.6rem;
+            font-family: TikTokFont;
+            padding: 0 8px;
+            margin-bottom: 4px;
+            background-color: #fff;
+            border-left: 1px solid rgba(255, 255, 255, 0.04);
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+            cursor: pointer;
+            opacity: 0.96;
+
+            &:hover {
+                opacity: 0.92;
+            }
+
+            &:disabled {
+                opacity: 0.8;
+                cursor: default;
+            }
+        }
+    }
+
+    & .notice {
+        display: flex;
+        align-items: center;
+        margin: 1.2rem 0;
+
+        & .notice-desc {
+            flex: 1;
+            text-align: left;
+            font-size: 1.2rem;
+        }
+    }
+
+    & .submit-btn {
+        margin-top: 1.6rem;
+    }
+
+    //Login content
+    & .text-btn {
+        width: auto;
+        padding: 12px 24px 12px 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+        font-family: TikTokFont;
+        text-align: left;
+        color: var(--text-color-primary);
+        background-color: transparent;
+
+        &:hover {
+            cursor: pointer;
             text-decoration: underline;
         }
     }

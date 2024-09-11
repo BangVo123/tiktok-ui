@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 function AccountItem() {
     return (
         <div className={cx('account-item')}>
-            <Image src={'ajhdvsajhd'} alt={'ajhfgdajh'} className={cx('avatar')} />
+            <Image src={''} alt={''} className={cx('avatar')} />
             <div className={cx('item-info')}>
                 <p className={cx('nickname')}>
                     <strong>dongdendidev</strong>

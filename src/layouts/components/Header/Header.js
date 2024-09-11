@@ -16,6 +16,7 @@ import Image from '~/components/Image';
 import Search from '../Search/Search';
 import config from '~/config';
 import { UserContext } from '~/Provider/UserProvider';
+import { useModal } from '~/Provider/ModalProvider';
 
 const cx = classNames.bind(styles);
 
@@ -33,6 +34,7 @@ const handleMenuChange = (menuItem) => {
 
 function Header({ onShowAuthModal }) {
     const { curUser, path } = useContext(UserContext);
+    const {onOpenModal} = useModal();
 
     return (
         <header className={cx('wrapper')}>
@@ -77,9 +79,7 @@ function Header({ onShowAuthModal }) {
                     <>
                         <Button
                             primary
-                            onClick={() => {
-                                onShowAuthModal();
-                            }}
+                            onClick={onOpenModal}
                         >
                             Log in
                         </Button>

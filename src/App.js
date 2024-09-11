@@ -1,5 +1,7 @@
 import { Fragment, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { publicRoutes } from '~/routes';
 import DefaultLayout from './layouts';
 import * as httpRequest from './utils/httpRequest';
@@ -28,10 +30,9 @@ function App() {
         }
     }, []);
 
-    
-
     return (
         <Router>
+            <ToastContainer />
             <div className="App">
                 <Routes>
                     {publicRoutes.map((route, idx) => {
