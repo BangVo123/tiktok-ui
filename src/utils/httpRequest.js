@@ -6,9 +6,9 @@ const httpRequest = axios.create({
     // withCredentials: true,
 });
 
-export const get = async (path, options = {}) => {
+export const get = async (path, params = {}, options = {}) => {
     try {
-        const res = await httpRequest.get(path, options);
+        const res = await httpRequest.get(path, { ...options, params });
         return res.data;
     } catch (e) {
         console.log(e);

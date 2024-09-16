@@ -8,17 +8,36 @@ import * as httpRequest from './utils/httpRequest';
 import { UserContext } from './Provider/UserProvider';
 
 function App() {
-    let { curUser, setCurUser } = useContext(UserContext);
+    let { curUser, setCurUser, setVideos, paginate, setPaginate } =
+        useContext(UserContext);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 console.log('Fetching user data...');
-                const res = await httpRequest.get('/auth', {
-                    withCredentials: true,
-                });
-                if (res.data) {
-                    setCurUser(res.data);
+                const userRes = await httpRequest.get(
+                    '/auth',
+                    {},
+                    {
+                        withCredentials: true,
+                    },
+                );
+                if (userRes.data) {
+                    setCurUser(userRes.data);
+                }
+
+                console.log('Fetching videos data...');
+                const videosRes = await httpRequest.get(
+                    `/video`,
+                    { page: paginate.page, limit: paginate.limit },
+                    {
+                        withCredentials: true,
+                    },
+                );
+                if (videosRes.data) {
+                    // console.log(videosRes.data);
+                    setPaginate({ page: 2, limit: 5 });
+                    setVideos(videosRes.data);
                 }
             } catch (e) {
                 console.error('API Fetch Error:', e);

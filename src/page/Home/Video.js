@@ -3,25 +3,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCommentDots,
     faHeart,
+    faMusic,
     faPlus,
     faShare,
 } from '@fortawesome/free-solid-svg-icons';
-import { useRef, createContext, useState } from 'react';
+import { useRef, createContext, useState, useEffect } from 'react';
 import styles from './Home.module.scss';
 import { FavoriteIcon } from '~/components/Icons';
 import InfoDialog from './InfoDialog';
 import Option from './Option';
-import videoSrc from '~/assets/video.mp4';
 import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
 export const VideoContext = createContext();
 
-function Video() {
+function Video({ video }) {
+    let { url, like, favorite, content, comment, share, belong_to } = video;
+
     const videoRef = useRef(null);
     const progressRef = useRef();
+    const titleRef = useRef();
+    const compRef = useRef();
+    const hasScroll = useRef(false);
+
     const [isOptionVisible, setIsOptionVisible] = useState(false);
+    const [isOverFlow, setIsOverFlow] = useState(false);
+    const [isFullTitle, setIsFullTitle] = useState(false);
+
     const [isLike, setIsLike] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
 
@@ -34,17 +43,68 @@ function Video() {
             }
         }
     };
-
     const handleUpdateProgress = () => {
         const curPercent =
             videoRef.current.currentTime / videoRef.current.duration;
         const width = curPercent * videoRef.current.offsetWidth;
         progressRef.current.style.width = `${width}px`;
     };
+    const handleToggleFullTitle = () => {
+        setIsFullTitle(!isFullTitle);
+    };
+
+    useEffect(() => {
+        //check overflow
+        if (titleRef.current.scrollWidth > titleRef.current.clientWidth) {
+            setIsOverFlow(true);
+        }
+
+        const video = videoRef.current;
+        //intersection observer
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    //auto play when video has 60% height is displayed
+                    if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+                        if (!hasScroll.current) {
+                            //auto scroll video to center screen
+                            entry.target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'end',
+                            });
+                            hasScroll.current = true;
+                        }
+
+                        if (video.paused || video.ended) {
+                            video.play();
+                        }
+                    } else {
+                        if (!video.paused) {
+                            video.pause();
+                        }
+                        hasScroll.current = false;
+                    }
+                });
+            },
+            {
+                threshold: [0.6],
+            },
+        );
+
+        if (compRef.current) {
+            observer.observe(compRef.current);
+        }
+
+        return () => {
+            if (compRef.current) {
+                observer.unobserve(compRef.current);
+            }
+        };
+    }, []);
 
     return (
         <VideoContext.Provider value={{ videoRef: videoRef }}>
-            <div className={cx('video-item-wrapper')}>
+            <div className={cx('video-item-wrapper')} ref={compRef}>
                 <div className={cx('main-content')}>
                     <div
                         onMouseEnter={() => setIsOptionVisible(true)}
@@ -55,14 +115,13 @@ function Video() {
                             {/* should be custom video component */}
                             <video
                                 className={cx('video')}
-                                autoPlay
                                 muted={false}
                                 loop
                                 ref={videoRef}
                                 onClick={handleClick}
                                 onTimeUpdate={handleUpdateProgress}
                             >
-                                <source src={videoSrc} type="video/mp4" />
+                                <source src={url} type="video/mp4" />
                             </video>
                             <div className={cx('progress-bar')}>
                                 <div className={cx('progress')}></div>
@@ -74,18 +133,48 @@ function Video() {
                                     className={cx('current-percent')}
                                 ></div>
                             </div>
+                            <div className={cx('video-title')}>
+                                <a href="ahs" className={cx('name')}>
+                                    {belong_to.full_name}
+                                </a>
+                                <p
+                                    className={cx('title-wrapper', {
+                                        overflow: isFullTitle,
+                                    })}
+                                >
+                                    <span
+                                        className={cx('title', {
+                                            full: isFullTitle,
+                                        })}
+                                        ref={titleRef}
+                                    >
+                                        {content}
+                                    </span>
+                                    {isOverFlow && (
+                                        <span
+                                            className={cx('more-btn')}
+                                            onClick={handleToggleFullTitle}
+                                        >
+                                            {isFullTitle ? 'less' : 'more'}
+                                        </span>
+                                    )}
+                                </p>
+                                <span className={cx('sound')}>
+                                    <span className={cx('sound-icon')}>
+                                        <FontAwesomeIcon icon={faMusic} />
+                                    </span>
+                                    Original sound
+                                    {/* Plus with user name */}
+                                </span>
+                            </div>
                             {/* End */}
                         </div>
                     </div>
                     <div className={cx('action-bar')}>
                         {/* Custom action bar item, default 48px 400px */}
-                        <InfoDialog>
+                        <InfoDialog info={video.belong_to}>
                             <div className={cx('user-item')}>
-                                <Image
-                                    className={cx('avt')}
-                                    src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/7340155511947395115~c5_100x100.jpeg?lk3s=a5d48078&nonce=51799&refresh_token=2a01fefefba9fe8e1937d50c0ccc680b&x-expires=1723446000&x-signature=rgRUSusVATNM0rH%2Bluq4TM7QHxU%3D&shp=a5d48078&shcp=81f88b70"
-                                    alt=""
-                                />
+                                <Image className={cx('avt')} src="" alt="" />
                                 <span className={cx('check')}>
                                     {/* Logic for follower and non follower */}
                                     <FontAwesomeIcon
@@ -106,7 +195,9 @@ function Video() {
                                     icon={faHeart}
                                 />
                             </span>
-                            <span className={cx('item-nums')}>123</span>
+                            <span className={cx('item-nums')}>
+                                {isLike ? like + 1 : like}
+                            </span>
                         </div>
                         <div className={cx('action-item')}>
                             <span className={cx('icon-wrap')}>
@@ -115,7 +206,7 @@ function Video() {
                                     icon={faCommentDots}
                                 />
                             </span>
-                            <span className={cx('item-nums')}>123</span>
+                            <span className={cx('item-nums')}>{comment}</span>
                         </div>
                         <div
                             className={cx('action-item', {
@@ -126,7 +217,9 @@ function Video() {
                             <span className={cx('icon-wrap', 'favorite-icon')}>
                                 <FavoriteIcon className={cx('icon')} />
                             </span>
-                            <span className={cx('item-nums')}>123</span>
+                            <span className={cx('item-nums')}>
+                                {isFavorite ? favorite + 1 : favorite}
+                            </span>
                         </div>
                         <div className={cx('action-item')}>
                             <span className={cx('icon-wrap')}>
@@ -135,7 +228,7 @@ function Video() {
                                     icon={faShare}
                                 />
                             </span>
-                            <span className={cx('item-nums')}>123</span>
+                            <span className={cx('item-nums')}>{share}</span>
                         </div>
 
                         {/* End */}

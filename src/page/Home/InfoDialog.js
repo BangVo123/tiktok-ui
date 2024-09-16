@@ -6,7 +6,7 @@ import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
-function InfoDialog({ children }) {
+function InfoDialog({ children, info }) {
     return (
         <div>
             <HeadlessTippy
@@ -17,22 +17,34 @@ function InfoDialog({ children }) {
                 render={() => (
                     <div className={cx('tippy-wrapper')}>
                         <header className={cx('header')}>
-                            <Image src="a" alt="" className={cx('tippy-avt')} />
+                            <Image
+                                src={info.url}
+                                alt=""
+                                className={cx('tippy-avt')}
+                            />
                             <Button outline>Follow</Button>
                         </header>
                         <div className={cx('body')}>
-                            <span className={cx('user-name')}>Username</span>
-                            <span className={cx('name')}>Name</span>
+                            <span className={cx('user-name')}>
+                                {info.full_name}
+                            </span>
+                            <span className={cx('name')}>{info.full_name}</span>
 
                             <div className={cx('info')}>
-                                <span className={cx('tippy-nums')}>123</span>
-                                <span className={cx('info-header')}>Followers</span>
-                                <span className={cx('tippy-nums')}>13456</span>
+                                <span className={cx('tippy-nums')}>
+                                    {info.followers_count}
+                                </span>
+                                <span className={cx('info-header')}>
+                                    Followers
+                                </span>
+                                <span className={cx('tippy-nums')}>
+                                    {info.likes_count}
+                                </span>
                                 <span className={cx('info-header')}>Likes</span>
                             </div>
                         </div>
                         <footer className={cx('footer')}>
-                            <div className={cx('bio')}>Clash of clan</div>
+                            <div className={cx('bio')}>{info.bio}</div>
                         </footer>
                     </div>
                 )}
