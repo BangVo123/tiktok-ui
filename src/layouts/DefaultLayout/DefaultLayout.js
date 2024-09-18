@@ -23,7 +23,6 @@ function DefaultLayout({ children }) {
     }, [location.pathname]);
 
     return (
-        <ModalProvider>
             <div className={cx('wrapper')}>
                 <AuthProvider>
                     <AuthModal />
@@ -37,7 +36,6 @@ function DefaultLayout({ children }) {
                 </Button> */}
                 </div>
             </div>
-        </ModalProvider>
     );
 }
 

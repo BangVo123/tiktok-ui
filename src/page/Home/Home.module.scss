@@ -105,10 +105,11 @@
     position: relative;
     width: auto;
     height: calc(100vh - 40px - 60px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     overflow: hidden;
 
-    .video-title {
+    & .video-title {
         display: flex;
         flex-direction: column;
         justify-content: end;
@@ -124,11 +125,11 @@
         background: linear-gradient(transparent, rgb(0, 0, 0));
         text-shadow: 0 0 5px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.5);
 
-        & .name {
+        & .username {
             padding-bottom: 1rem;
-            cursor: pointer;
 
             &:hover {
+                cursor: pointer;
                 text-decoration: underline;
             }
         }

@@ -67,12 +67,16 @@ function Video({ video }) {
                     //auto play when video has 60% height is displayed
                     if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
                         if (!hasScroll.current) {
+                            console.log(1);
                             //auto scroll video to center screen
                             entry.target.scrollIntoView({
                                 behavior: 'smooth',
                                 block: 'end',
+                                inline: 'nearest',
                             });
+                            // entry.target.scrollIntoView(true);
                             hasScroll.current = true;
+                            console.log(2);
                         }
 
                         if (video.paused || video.ended) {
@@ -87,7 +91,7 @@ function Video({ video }) {
                 });
             },
             {
-                threshold: [0.6],
+                threshold: 0.6,
             },
         );
 
@@ -100,7 +104,7 @@ function Video({ video }) {
                 observer.unobserve(compRef.current);
             }
         };
-    }, []);
+    }, [compRef.current]);
 
     return (
         <VideoContext.Provider value={{ videoRef: videoRef }}>
@@ -134,7 +138,7 @@ function Video({ video }) {
                                 ></div>
                             </div>
                             <div className={cx('video-title')}>
-                                <a href="ahs" className={cx('name')}>
+                                <a href="ahs" className={cx('username')}>
                                     {belong_to.full_name}
                                 </a>
                                 <p
@@ -174,7 +178,11 @@ function Video({ video }) {
                         {/* Custom action bar item, default 48px 400px */}
                         <InfoDialog info={video.belong_to}>
                             <div className={cx('user-item')}>
-                                <Image className={cx('avt')} src="" alt="" />
+                                <Image
+                                    className={cx('avt')}
+                                    src={belong_to.avatar}
+                                    alt=""
+                                />
                                 <span className={cx('check')}>
                                     {/* Logic for follower and non follower */}
                                     <FontAwesomeIcon

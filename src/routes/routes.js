@@ -11,17 +11,15 @@ import Friend from '~/page/Friend';
 import Live from '~/page/Live';
 
 //Public route with not login
-const publicRoutes = [
+const routes = [
     { path: config.routes.home, component: Home },
-    { path: config.routes.following, component: Following },
-    { path: config.routes.profile, component: Profile },
+    { path: config.routes.following, component: Following, private: true },
+    { path: config.routes.profile, component: Profile, private: true },
     { path: config.routes.explore, component: Explore },
-    { path: config.routes.friend, component: Friend },
+    { path: config.routes.friend, component: Friend, private: true },
     { path: config.routes.live, component: Live },
-    { path: config.routes.upload, component: Upload },
+    { path: config.routes.upload, component: Upload, private: true },
     { path: config.routes.search, component: Search, layout: null },
 ];
 
-const privateRoutes = [];
-
-export { publicRoutes, privateRoutes };
+export default routes;

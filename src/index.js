@@ -4,13 +4,16 @@ import App from '~/App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from './components/GlobalStyles/GlobalStyle';
 import { UserProvider } from './Provider/UserProvider';
+import ModalProvider from './Provider/ModalProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     // <React.StrictMode>
     <GlobalStyles>
         <UserProvider>
-            <App />
+            <ModalProvider>
+                <App />
+            </ModalProvider>
         </UserProvider>
     </GlobalStyles>,
     // </React.StrictMode>,

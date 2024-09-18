@@ -1,19 +1,39 @@
 import { Fragment, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { publicRoutes } from '~/routes';
+import routes from './routes';
 import DefaultLayout from './layouts';
 import * as httpRequest from './utils/httpRequest';
 import { UserContext } from './Provider/UserProvider';
+import ProtectRoutes from './components/ProtectRoute';
 
 function App() {
-    let { curUser, setCurUser, setVideos, paginate, setPaginate } =
-        useContext(UserContext);
+    const {
+        curUser,
+        setCurUser,
+        setIsAuthenticate,
+        setVideos,
+        paginate,
+        setPaginate,
+    } = useContext(UserContext);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                console.log('Fetching videos data...');
+                const videosRes = await httpRequest.get(
+                    `/video`,
+                    { page: paginate.page, limit: paginate.limit },
+                    {
+                        withCredentials: true,
+                    },
+                );
+                if (videosRes.data) {
+                    setPaginate({ page: 2, limit: 5 });
+                    setVideos(videosRes.data);
+                }
+
                 console.log('Fetching user data...');
                 const userRes = await httpRequest.get(
                     '/auth',
@@ -24,20 +44,7 @@ function App() {
                 );
                 if (userRes.data) {
                     setCurUser(userRes.data);
-                }
-
-                console.log('Fetching videos data...');
-                const videosRes = await httpRequest.get(
-                    `/video`,
-                    { page: paginate.page, limit: paginate.limit },
-                    {
-                        withCredentials: true,
-                    },
-                );
-                if (videosRes.data) {
-                    // console.log(videosRes.data);
-                    setPaginate({ page: 2, limit: 5 });
-                    setVideos(videosRes.data);
+                    setIsAuthenticate(true);
                 }
             } catch (e) {
                 console.error('API Fetch Error:', e);
@@ -54,7 +61,7 @@ function App() {
             <ToastContainer />
             <div className="App">
                 <Routes>
-                    {publicRoutes.map((route, idx) => {
+                    {routes.map((route, idx) => {
                         let Layout = DefaultLayout;
                         if (route.layout) {
                             Layout = route.layout;
@@ -67,9 +74,11 @@ function App() {
                                 key={idx}
                                 path={route.path}
                                 element={
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
+                                    <ProtectRoutes private={route.private}>
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    </ProtectRoutes>
                                 }
                             />
                         );

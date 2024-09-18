@@ -32,8 +32,6 @@ function Home() {
                     setHasMore(false);
                 }
                 setVideos((prev) => {
-                    const data = [...prev, ...res.data];
-                    console.log(new Set(data) === 10);
                     return [...prev, ...res.data];
                 });
                 setPaginate((prev) => ({ ...prev, page: prev.page + 1 }));
@@ -59,7 +57,6 @@ function Home() {
 
     return (
         <div className={cx('wrapper')}>
-            {console.log(paginate)}
             {videos &&
                 videos.map((el, idx, videos) => (
                     <div

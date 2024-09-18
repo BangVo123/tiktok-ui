@@ -18,7 +18,7 @@ function InfoDialog({ children, info }) {
                     <div className={cx('tippy-wrapper')}>
                         <header className={cx('header')}>
                             <Image
-                                src={info.url}
+                                src={info.avatar}
                                 alt=""
                                 className={cx('tippy-avt')}
                             />

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import { Link, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 
 import styles from './Header.module.scss';
@@ -32,24 +31,28 @@ const handleMenuChange = (menuItem) => {
     }
 };
 
-function Header({ onShowAuthModal }) {
-    const { curUser, path } = useContext(UserContext);
-    const {onOpenModal} = useModal();
+function Header() {
+    const { curUser, path, isAuthenticate } = useContext(UserContext);
+    const { onOpenModal } = useModal();
 
     return (
         <header className={cx('wrapper')}>
             <div className={cx('logo')} tabIndex={-1}>
-                <Link to={config.routes.home}>
+                <Button to={config.routes.home}>
                     <img src={images.logo} alt="" className={cx('tk-logo')} />
-                </Link>
-                {path === '/upload' ? <div className={cx('studio')}>Studio</div> : ''}
+                </Button>
+                {path === '/upload' ? (
+                    <div className={cx('studio')}>Studio</div>
+                ) : (
+                    ''
+                )}
             </div>
 
             {/* Search */}
             {path === '/upload' ? null : <Search />}
 
             <div className={cx('action')}>
-                {Object.keys(curUser).length !== 0 ? (
+                {isAuthenticate ? (
                     <>
                         {path === '/upload' ? null : (
                             <>
@@ -61,15 +64,27 @@ function Header({ onShowAuthModal }) {
                                 >
                                     Upload
                                 </Button>
-                                <Tippy delay={[0, 200]} content="Messages" placement="bottom">
+                                <Tippy
+                                    delay={[0, 200]}
+                                    content="Messages"
+                                    placement="bottom"
+                                >
                                     <button className={cx('action-btn')}>
                                         <MessageIcon />
                                     </button>
                                 </Tippy>
-                                <Tippy delay={[0, 200]} content="Inbox" placement="bottom">
-                                    <button className={cx('action-btn', 'inbox')}>
+                                <Tippy
+                                    delay={[0, 200]}
+                                    content="Inbox"
+                                    placement="bottom"
+                                >
+                                    <button
+                                        className={cx('action-btn', 'inbox')}
+                                    >
                                         <InboxIcon />
-                                        <span className={cx('inbox-nums')}>12</span>
+                                        <span className={cx('inbox-nums')}>
+                                            12
+                                        </span>
                                     </button>
                                 </Tippy>
                             </>
@@ -77,17 +92,18 @@ function Header({ onShowAuthModal }) {
                     </>
                 ) : (
                     <>
-                        <Button
-                            primary
-                            onClick={onOpenModal}
-                        >
+                        <Button primary onClick={onOpenModal}>
                             Log in
                         </Button>
                     </>
                 )}
                 <Menu onChange={handleMenuChange}>
                     {Object.keys(curUser).length !== 0 ? (
-                        <Image className={cx('avt')} src={curUser.avatar} alt="Nguyen Van A" />
+                        <Image
+                            className={cx('avt')}
+                            src={curUser.avatar}
+                            alt="Nguyen Van A"
+                        />
                     ) : (
                         <button className={cx('more-btn')}>
                             <FontAwesomeIcon icon={faEllipsisVertical} />
