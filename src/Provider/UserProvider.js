@@ -1,13 +1,14 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useRef } from 'react';
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-    let [curUser, setCurUser] = useState({});
-    let [isAuthenticate, setIsAuthenticate] = useState(false);
-    let [path, setPath] = useState('/');
-    let [videos, setVideos] = useState([]);
-    let [paginate, setPaginate] = useState({ page: 1, limit: 5 });
+    const [curUser, setCurUser] = useState({});
+    const [isAuthenticate, setIsAuthenticate] = useState(false);
+    const [path, setPath] = useState('/'); //
+    const [videos, setVideos] = useState([]);
+    const [paginate, setPaginate] = useState({ page: 1, limit: 5 }); //
+    const [favorite, setFavorite] = useState({ likes: [], loves: [] });
 
     return (
         <UserContext.Provider
@@ -22,6 +23,8 @@ const UserProvider = ({ children }) => {
                 setVideos,
                 paginate,
                 setPaginate,
+                favorite,
+                setFavorite,
             }}
         >
             {children}

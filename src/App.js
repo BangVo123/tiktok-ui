@@ -16,6 +16,7 @@ function App() {
         setVideos,
         paginate,
         setPaginate,
+        setFavorite,
     } = useContext(UserContext);
 
     useEffect(() => {
@@ -42,9 +43,11 @@ function App() {
                         withCredentials: true,
                     },
                 );
+                // console.log(userRes);
                 if (userRes.data) {
-                    setCurUser(userRes.data);
+                    setCurUser(userRes.data.user);
                     setIsAuthenticate(true);
+                    setFavorite(userRes.data.favorite);
                 }
             } catch (e) {
                 console.error('API Fetch Error:', e);

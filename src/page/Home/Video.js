@@ -7,20 +7,24 @@ import {
     faPlus,
     faShare,
 } from '@fortawesome/free-solid-svg-icons';
-import { useRef, createContext, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { useRef, createContext, useState, useEffect, useContext } from 'react';
 import styles from './Home.module.scss';
 import { FavoriteIcon } from '~/components/Icons';
 import InfoDialog from './InfoDialog';
 import Option from './Option';
 import Image from '~/components/Image';
+import httpRequest from '~/utils/httpRequest';
+import { UserContext } from '~/Provider/UserProvider';
 
 const cx = classNames.bind(styles);
 
 export const VideoContext = createContext();
 
 function Video({ video }) {
-    let { url, like, favorite, content, comment, share, belong_to } = video;
+    const { favorite, setFavorite } = useContext(UserContext);
 
+    const videoInfoRef = useRef(video);
     const videoRef = useRef(null);
     const progressRef = useRef();
     const titleRef = useRef();
@@ -32,7 +36,7 @@ function Video({ video }) {
     const [isFullTitle, setIsFullTitle] = useState(false);
 
     const [isLike, setIsLike] = useState(false);
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [isLove, setIsLove] = useState(false);
 
     const handleClick = () => {
         if (videoRef.current) {
@@ -52,6 +56,60 @@ function Video({ video }) {
     const handleToggleFullTitle = () => {
         setIsFullTitle(!isFullTitle);
     };
+    const handleSetLike = async () => {
+        try {
+            const likeRes = await httpRequest.post(
+                `/video/like/${videoInfoRef.current._id}`,
+                {},
+                { withCredentials: true },
+            );
+            if (likeRes.status >= 200 && likeRes.status < 300) {
+                setFavorite((prev) => ({
+                    ...prev,
+                    likes: [...prev.likes, video.id],
+                }));
+                if (!isLike) {
+                    videoInfoRef.current.like = videoInfoRef.current.like + 1;
+                    setIsLike(true);
+                } else {
+                    videoInfoRef.current.like = videoInfoRef.current.like - 1;
+                    setIsLike(false);
+                }
+            } else {
+                toast.error('Something went wrong');
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    const handleSetLove = async () => {
+        try {
+            console.log(videoInfoRef.current._id);
+            const loveRes = await httpRequest.post(
+                `/video/love/${videoInfoRef.current._id}`,
+                {},
+                { withCredentials: true },
+            );
+            console.log(loveRes);
+            if (loveRes.status >= 200 && loveRes.status < 300) {
+                setFavorite((prev) => ({
+                    ...prev,
+                    loves: [...prev.loves, video.id],
+                }));
+                if (!isLove) {
+                    videoInfoRef.current.love = videoInfoRef.current.love + 1;
+                    setIsLove(true);
+                } else {
+                    videoInfoRef.current.love = videoInfoRef.current.love - 1;
+                    setIsLove(false);
+                }
+            } else {
+                toast.error('Something went wrong');
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     useEffect(() => {
         //check overflow
@@ -67,7 +125,6 @@ function Video({ video }) {
                     //auto play when video has 60% height is displayed
                     if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
                         if (!hasScroll.current) {
-                            console.log(1);
                             //auto scroll video to center screen
                             entry.target.scrollIntoView({
                                 behavior: 'smooth',
@@ -76,7 +133,6 @@ function Video({ video }) {
                             });
                             // entry.target.scrollIntoView(true);
                             hasScroll.current = true;
-                            console.log(2);
                         }
 
                         if (video.paused || video.ended) {
@@ -106,6 +162,17 @@ function Video({ video }) {
         };
     }, [compRef.current]);
 
+    useEffect(() => {
+        // console.log(favorite);
+        // console.log(video);
+        if (favorite?.likes.includes(video._id)) {
+            setIsLike(true);
+        }
+        if (favorite?.loves.includes(video._id)) {
+            setIsLove(true);
+        }
+    }, [favorite?.likes, favorite.loves]);
+
     return (
         <VideoContext.Provider value={{ videoRef: videoRef }}>
             <div className={cx('video-item-wrapper')} ref={compRef}>
@@ -125,7 +192,10 @@ function Video({ video }) {
                                 onClick={handleClick}
                                 onTimeUpdate={handleUpdateProgress}
                             >
-                                <source src={url} type="video/mp4" />
+                                <source
+                                    src={videoInfoRef.current.url}
+                                    type="video/mp4"
+                                />
                             </video>
                             <div className={cx('progress-bar')}>
                                 <div className={cx('progress')}></div>
@@ -139,7 +209,7 @@ function Video({ video }) {
                             </div>
                             <div className={cx('video-title')}>
                                 <a href="ahs" className={cx('username')}>
-                                    {belong_to.full_name}
+                                    {videoInfoRef.current.belong_to.full_name}
                                 </a>
                                 <p
                                     className={cx('title-wrapper', {
@@ -152,7 +222,7 @@ function Video({ video }) {
                                         })}
                                         ref={titleRef}
                                     >
-                                        {content}
+                                        {videoInfoRef.current.content}
                                     </span>
                                     {isOverFlow && (
                                         <span
@@ -176,11 +246,11 @@ function Video({ video }) {
                     </div>
                     <div className={cx('action-bar')}>
                         {/* Custom action bar item, default 48px 400px */}
-                        <InfoDialog info={video.belong_to}>
+                        <InfoDialog info={videoInfoRef.current.belong_to}>
                             <div className={cx('user-item')}>
                                 <Image
                                     className={cx('avt')}
-                                    src={belong_to.avatar}
+                                    src={videoInfoRef.current.belong_to.avatar}
                                     alt=""
                                 />
                                 <span className={cx('check')}>
@@ -195,7 +265,7 @@ function Video({ video }) {
                         {/* add event here */}
                         <div
                             className={cx('action-item', { active: isLike })}
-                            onClick={() => setIsLike(!isLike)}
+                            onClick={(e) => handleSetLike(e)}
                         >
                             <span className={cx('icon-wrap', 'like-icon')}>
                                 <FontAwesomeIcon
@@ -204,7 +274,8 @@ function Video({ video }) {
                                 />
                             </span>
                             <span className={cx('item-nums')}>
-                                {isLike ? like + 1 : like}
+                                {/* {isLike ? like + 1 : like} */}
+                                {videoInfoRef.current.like}
                             </span>
                         </div>
                         <div className={cx('action-item')}>
@@ -214,19 +285,22 @@ function Video({ video }) {
                                     icon={faCommentDots}
                                 />
                             </span>
-                            <span className={cx('item-nums')}>{comment}</span>
+                            <span className={cx('item-nums')}>
+                                {videoInfoRef.current.comment}
+                            </span>
                         </div>
                         <div
                             className={cx('action-item', {
-                                active: isFavorite,
+                                active: isLove,
                             })}
-                            onClick={() => setIsFavorite(!isFavorite)}
+                            onClick={(e) => handleSetLove(e)}
                         >
                             <span className={cx('icon-wrap', 'favorite-icon')}>
                                 <FavoriteIcon className={cx('icon')} />
                             </span>
                             <span className={cx('item-nums')}>
-                                {isFavorite ? favorite + 1 : favorite}
+                                {/* {isLove ? favorite + 1 : favorite} */}
+                                {videoInfoRef.current.love}
                             </span>
                         </div>
                         <div className={cx('action-item')}>
@@ -236,7 +310,9 @@ function Video({ video }) {
                                     icon={faShare}
                                 />
                             </span>
-                            <span className={cx('item-nums')}>{share}</span>
+                            <span className={cx('item-nums')}>
+                                {videoInfoRef.current.share}
+                            </span>
                         </div>
 
                         {/* End */}
