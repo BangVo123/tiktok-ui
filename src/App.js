@@ -14,40 +14,37 @@ function App() {
         setCurUser,
         setIsAuthenticate,
         setVideos,
-        paginate,
-        setPaginate,
+        paginateRef,
         setFavorite,
+        setFollow,
     } = useContext(UserContext);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 console.log('Fetching videos data...');
-                const videosRes = await httpRequest.get(
-                    `/video`,
-                    { page: paginate.page, limit: paginate.limit },
-                    {
-                        withCredentials: true,
-                    },
-                );
+                const videosRes = await httpRequest.get(`/video`, {
+                    page: paginateRef.current.page,
+                    limit: paginateRef.current.limit,
+                });
                 if (videosRes.data) {
-                    setPaginate({ page: 2, limit: 5 });
+                    paginateRef.current.page = 2;
                     setVideos(videosRes.data);
                 }
 
                 console.log('Fetching user data...');
                 const userRes = await httpRequest.get(
-                    '/auth',
+                    '/users',
                     {},
                     {
                         withCredentials: true,
                     },
                 );
-                // console.log(userRes);
                 if (userRes.data) {
                     setCurUser(userRes.data.user);
                     setIsAuthenticate(true);
                     setFavorite(userRes.data.favorite);
+                    setFollow(userRes.data.follow);
                 }
             } catch (e) {
                 console.error('API Fetch Error:', e);

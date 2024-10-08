@@ -262,6 +262,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    & .following {
+        border-color: var(--text-color-primary);
+        color: var(--text-color-primary);
+    }
 }
 
 .tippy-avt {

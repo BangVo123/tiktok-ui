@@ -3,7 +3,6 @@ import axios from 'axios';
 const httpRequest = axios.create({
     // baseURL: process.env.REACT_APP_BASE_URL,
     baseURL: 'http://localhost:3050/api/v1',
-    // withCredentials: true,
 });
 
 export const get = async (path, params = {}, options = {}) => {

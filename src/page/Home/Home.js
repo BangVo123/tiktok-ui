@@ -8,8 +8,7 @@ import * as httpRequest from '~/utils/httpRequest';
 const cx = classNames.bind(styles);
 
 function Home() {
-    const { videos, setVideos, paginate, setPaginate } =
-        useContext(UserContext);
+    const { videos, setVideos, paginateRef } = useContext(UserContext);
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -22,7 +21,10 @@ function Home() {
         try {
             const res = await httpRequest.get(
                 `/video`,
-                { page: paginate.page, limit: paginate.limit },
+                {
+                    page: paginateRef.current.page,
+                    limit: paginateRef.current.limit,
+                },
                 { withCredentials: true },
             );
 
@@ -34,14 +36,14 @@ function Home() {
                 setVideos((prev) => {
                     return [...prev, ...res.data];
                 });
-                setPaginate((prev) => ({ ...prev, page: prev.page + 1 }));
+                paginateRef.current.page = paginateRef.current.page + 1;
             }
         } catch (err) {
             console.log('Error', err);
         } finally {
             setIsLoading(false);
         }
-    }, [paginate, isLoading, hasMore]);
+    }, [paginateRef.current, isLoading, hasMore]);
 
     const callback = useCallback(
         (node) => {
