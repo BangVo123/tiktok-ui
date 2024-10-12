@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, memo } from 'react';
 import classNames from 'classnames/bind';
-import styles from './Home.module.scss';
+import styles from './VideoActionBar.module.scss';
 import {
     faCheck,
     faCommentDots,
@@ -9,19 +9,19 @@ import {
     faShare,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import InfoDialog from './InfoDialog';
+import UserInfoDialog from '../UserInfoDialog';
 import Image from '~/components/Image';
 import { FavoriteIcon } from '~/components/Icons';
 import httpRequest from '~/utils/httpRequest';
-import { UserContext } from '~/Provider/UserProvider';
-import { VideoContext } from './Video';
+import { useUser } from '~/Provider/UserProvider';
+import { useVideo } from '../Video';
 import { useDebounce } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
-function VideoActionBar() {
-    const { favorite, curUser, follow, setFollow } = useContext(UserContext);
-    const { videoInfo } = useContext(VideoContext);
+function VideoActionBar({ handleToggleComment }) {
+    const { favorite, curUser, follow, setFollow } = useUser();
+    const { videoInfo } = useVideo();
 
     const [isLike, setIsLike] = useState(false);
     const [isLove, setIsLove] = useState(false);
@@ -105,7 +105,7 @@ function VideoActionBar() {
     return (
         <div className={cx('action-bar')}>
             {/* Custom action bar item, default 48px 400px */}
-            <InfoDialog
+            <UserInfoDialog
                 info={videoInfo.belong_to}
                 showFollowBtn={videoInfo.belong_to._id !== curUser._id}
                 isFollow={isFollow}
@@ -125,7 +125,7 @@ function VideoActionBar() {
                         </span>
                     )}
                 </div>
-            </InfoDialog>
+            </UserInfoDialog>
             <div
                 className={cx('action-item', { active: isLike })}
                 onClick={(e) => handleSetLike(e)}
@@ -135,7 +135,10 @@ function VideoActionBar() {
                 </span>
                 <span className={cx('item-nums')}>{videoInfo.like}</span>
             </div>
-            <div className={cx('action-item')}>
+            <div
+                className={cx('action-item')}
+                onClick={() => handleToggleComment()}
+            >
                 <span className={cx('icon-wrap')}>
                     <FontAwesomeIcon
                         className={cx('icon')}

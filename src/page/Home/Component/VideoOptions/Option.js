@@ -5,10 +5,10 @@ import {
     faVolumeHigh,
     faVolumeXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
-import styles from './Home.module.scss';
-import { VideoContext } from './Video';
+import styles from './Option.module.scss';
+import { useVideo } from '../Video';
 import Button from '~/components/Button';
 import { AutoScrollIcon, HeartBrokenIcon, FlagIcon } from '~/components/Icons';
 import Toggle from '~/components/Toggle';
@@ -18,7 +18,7 @@ const cx = classNames.bind(styles);
 function Option({ visible }) {
     const [isMuted, setIsMuted] = useState(false);
     const [isAutoScroll, setIsAutoScroll] = useState(false);
-    const { videoRef } = useContext(VideoContext);
+    const { videoRef } = useVideo();
 
     const handleVolume = () => {
         if (videoRef.current) {
@@ -71,12 +71,6 @@ function Option({ visible }) {
                                     onClick={handleToggle}
                                     className={cx('toggle')}
                                 />
-                                {/* <div
-                                    className={cx('toggle-btn', { active: isAutoScroll })}
-                                    onClick={handleToggle}
-                                >
-                                    <span className={cx('circle', { active: isAutoScroll })}></span>
-                                </div> */}
                             </div>
                             <div className={cx('btn-wrapper')}>
                                 <Button

@@ -1,11 +1,11 @@
-import { useContext, useEffect } from 'react';
-import { UserContext } from '~/Provider/UserProvider';
+import { useEffect } from 'react';
+import { useUser } from '~/Provider/UserProvider';
 import { toast } from 'react-toastify';
 
 import { Navigate } from 'react-router-dom';
 
 function ProtectRoutes({ children, private: isPrivate }) {
-    const { isAuthenticate } = useContext(UserContext);
+    const { isAuthenticate } = useUser();
     useEffect(() => {
         if (isPrivate && !isAuthenticate) toast.warn('User not authenticate');
     }, []);

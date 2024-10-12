@@ -1,14 +1,14 @@
 import classNames from 'classnames/bind';
-import { useContext, useState, useRef, useCallback } from 'react';
-import { UserContext } from '~/Provider/UserProvider';
+import { useState, useRef, useCallback } from 'react';
+import { useUser } from '~/Provider/UserProvider';
 import styles from './Home.module.scss';
-import Video from './Video';
+import Video from '../Video';
 import * as httpRequest from '~/utils/httpRequest';
 
 const cx = classNames.bind(styles);
 
 function Home() {
-    const { videos, setVideos, paginateRef } = useContext(UserContext);
+    const { videos, setVideos, paginateRef } = useUser();
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 

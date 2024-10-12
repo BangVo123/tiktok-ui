@@ -1,13 +1,22 @@
 import classNames from 'classnames/bind';
-import { useRef, createContext, useState, useEffect, memo } from 'react';
-import styles from './Home.module.scss';
-import Option from './Option';
-import VideoTitle from './VideoTitle';
-import VideoActionBar from './VideoActionBar';
+import {
+    useRef,
+    createContext,
+    useState,
+    useEffect,
+    useContext,
+    memo,
+} from 'react';
+import styles from './Video.module.scss';
+import Option from '../VideoOptions/Option';
+import VideoTitle from '../VideoTitle/VideoTitle';
+import VideoActionBar from '../VideoActionBar';
+import Comment from '../Comment/Comment';
 
 const cx = classNames.bind(styles);
 
-export const VideoContext = createContext();
+const VideoContext = createContext();
+export const useVideo = () => useContext(VideoContext);
 
 function Video({ video }) {
     const videoInfoRef = useRef(video);
@@ -17,6 +26,7 @@ function Video({ video }) {
     const hasScroll = useRef(false);
 
     const [isOptionVisible, setIsOptionVisible] = useState(false);
+    const [isShowComment, setIsShowComment] = useState(false);
 
     const handleClick = () => {
         if (videoRef.current) {
@@ -32,6 +42,9 @@ function Video({ video }) {
             videoRef.current.currentTime / videoRef.current.duration;
         const width = curPercent * videoRef.current.offsetWidth;
         progressRef.current.style.width = `${width}px`;
+    };
+    const handleToggleComment = () => {
+        setIsShowComment((prev) => !prev);
     };
 
     useEffect(() => {
@@ -49,7 +62,6 @@ function Video({ video }) {
                                 block: 'end',
                                 inline: 'nearest',
                             });
-                            // entry.target.scrollIntoView(true);
                             hasScroll.current = true;
                         }
 
@@ -90,7 +102,6 @@ function Video({ video }) {
                     >
                         <Option visible={isOptionVisible} />
                         <div className={cx('video-container')}>
-                            {/* should be custom video component */}
                             <video
                                 className={cx('video')}
                                 muted={false}
@@ -120,8 +131,14 @@ function Video({ video }) {
                             />
                         </div>
                     </div>
-                    <VideoActionBar />
+                    <VideoActionBar handleToggleComment={handleToggleComment} />
                 </div>
+                {isShowComment && (
+                    <Comment
+                        handleToggleComment={handleToggleComment}
+                        numsComment={video.comment}
+                    />
+                )}
             </div>
         </VideoContext.Provider>
     );

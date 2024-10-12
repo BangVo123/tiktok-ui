@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useModal } from '~/Provider/ModalProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +7,7 @@ import styles from './AuthModal.module.scss';
 import Button from '~/components/Button';
 import { useAuth } from '~/Provider/AuthProvider';
 import httpRequest from '~/utils/httpRequest';
-import { UserContext } from '~/Provider/UserProvider';
+import { useUser } from '~/Provider/UserProvider';
 
 const cx = classNames.bind(styles);
 
@@ -16,7 +16,7 @@ function LoginContent() {
     const { setComponent } = useAuth();
     const [info, setInfo] = useState({ username: '', password: '' });
     const [isShowPass, setIsShowPass] = useState(false);
-    const { setCurUser } = useContext(UserContext);
+    const { setCurUser } = useUser();
 
     const handleNameInput = (e) => {
         setInfo({ ...info, username: e.target.value });

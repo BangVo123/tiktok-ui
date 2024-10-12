@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
-import { useContext } from 'react';
 import Menu, { MenuItem } from './Menu';
 import config from '~/config';
 import {
@@ -20,7 +19,7 @@ import {
 import FollowingAccounts from '~/components/FollowingAccounts';
 import Footer from './Footer';
 import Button from '~/components/Button';
-import { UserContext } from '~/Provider/UserProvider';
+import { useUser } from '~/Provider/UserProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBook,
@@ -36,7 +35,7 @@ import Image from '~/components/Image';
 const cx = classNames.bind(styles);
 
 function Sidebar({ onShowModal }) {
-    const { curUser, path } = useContext(UserContext);
+    const { curUser, path } = useUser();
     const { onOpenModal } = useModal();
 
     const handleEmptyFunction = (e) => {

@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
-import { useContext } from 'react';
-import { UserContext } from '~/Provider/UserProvider';
+import { useUser } from '~/Provider/UserProvider';
 import styles from './ConfirmModal.module.scss';
 import Button from '../../Button';
 import httpRequest from '~/utils/httpRequest';
@@ -8,7 +7,7 @@ import httpRequest from '~/utils/httpRequest';
 const cx = classNames.bind(styles);
 
 function ConfirmModal({ isOpen, handleCancel }) {
-    const { setCurUser } = useContext(UserContext);
+    const { setCurUser } = useUser();
 
     const handleAccept = async () => {
         // call api to logout here
@@ -29,7 +28,9 @@ function ConfirmModal({ isOpen, handleCancel }) {
             <div className={cx('body')}>
                 <div className={cx('content')}>
                     <div className={cx('content-wrapper')}>
-                        <div className={cx('title')}>Are you sure you want to log out?</div>
+                        <div className={cx('title')}>
+                            Are you sure you want to log out?
+                        </div>
                         <div className={cx('btn-group')}>
                             <Button
                                 className={cx('btn', 'cancel-btn')}
@@ -38,7 +39,11 @@ function ConfirmModal({ isOpen, handleCancel }) {
                             >
                                 Cancel
                             </Button>
-                            <Button className={cx('btn')} outline onClick={handleAccept}>
+                            <Button
+                                className={cx('btn')}
+                                outline
+                                onClick={handleAccept}
+                            >
                                 Log out
                             </Button>
                         </div>

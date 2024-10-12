@@ -1,0 +1,95 @@
+:root {
+    --action-bar-width: 48px;
+    --content-padding: 20px;
+}
+
+.option {
+    display: none;
+
+    &.visible {
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        top: 20px;
+        left: 0;
+        //Width = content - action bar - 2 side has padding
+        width: calc(
+            100% - var(--action-bar-width) - calc(var(--content-padding) * 2)
+        );
+        // padding left = content padding to push it into video
+        padding: 4px 4px 0 calc(var(--content-padding) + 4px);
+        z-index: 1;
+
+        & {
+            .volume,
+            .option-select {
+                cursor: pointer;
+            }
+        }
+
+        & .option-icon {
+            padding: 12px;
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+
+    & .option-select {
+        position: relative;
+
+        & .tippy-wrapper {
+            width: 200px;
+            padding: 6px 0;
+            background-color: rgb(37, 37, 37);
+            border-radius: 8px;
+
+            & .btn-wrapper {
+                position: relative;
+
+                & .btn {
+                    width: 100%;
+                }
+
+                &:first-child {
+                    display: flex;
+                    align-items: center;
+                }
+
+                & .toggle {
+                    position: absolute;
+                    right: 1.2rem;
+                }
+            }
+        }
+
+        .btn {
+            border-radius: 0;
+            font-weight: 400;
+            font-size: 1.4rem;
+            justify-content: flex-start;
+        }
+
+        & .btn-wrapper + .btn-wrapper {
+            border-top: 1px solid #333;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -20px;
+            width: 20px;
+            height: 130px;
+            background-color: transparent;
+        }
+    }
+}
+
+// .tippy-wrapper {
+//     width: 320px;
+//     height: 230px;
+//     height: 100%;
+//     padding: 20px;
+//     background-color: rgb(37, 37, 37);
+//     border-radius: 8px;
+// }

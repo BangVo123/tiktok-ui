@@ -1,0 +1,81 @@
+:root {
+    --action-bar-width: 48px;
+}
+
+.action-bar {
+    width: var(--action-bar-width);
+    height: 400px;
+    margin-left: 20px;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    & .user-item {
+        width: 100%;
+        aspect-ratio: 1;
+        position: relative;
+        cursor: pointer;
+        margin-bottom: 12px;
+
+        & .avt {
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+        }
+
+        & .check {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 2.4rem;
+            height: 2.4rem;
+            background-color: var(--primary);
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            & .check-icon {
+                width: 1.4rem;
+                height: 1.4rem;
+            }
+        }
+    }
+
+    & .icon-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.12);
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        & .icon {
+            width: 2.4rem;
+            height: 2.4rem;
+        }
+    }
+
+    & .item-nums {
+        display: block;
+        text-align: center;
+        margin-top: 8px;
+    }
+
+    & .active .like-icon {
+        color: var(--primary);
+    }
+
+    & .active .favorite-icon {
+        color: rgb(250 206 21);
+    }
+}

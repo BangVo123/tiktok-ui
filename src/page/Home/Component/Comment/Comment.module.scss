@@ -1,0 +1,87 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0;
+    width: 26vw;
+    min-width: 20vw;
+    align-self: stretch;
+    border-radius: 1.6rem;
+    padding: 1.2rem 0.8rem 1.2rem 1.2rem;
+    background-color: var(--background-secondary);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+
+    & .comment-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 4px;
+
+        & .close-btn {
+            padding: 0 8px;
+            cursor: pointer;
+        }
+    }
+
+    & .comment-body {
+        flex-grow: 1;
+    }
+
+    & .comment-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & .input-group {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            height: 4rem;
+            padding: 8px 6px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.12);
+
+            & .comment-input {
+                flex-grow: 1;
+                font-size: 1.6rem;
+                color: var(--text-color-primary);
+                caret-color: var(--primary);
+                background-color: transparent;
+            }
+
+            & .tag-btn,
+            .emoji-btn {
+                display: flex;
+                align-items: center;
+                width: 2.8rem;
+                height: 2.8rem;
+                padding: 4px;
+                font-size: 1.8rem;
+                line-height: 2.4rem;
+                cursor: pointer;
+                border-radius: 6px;
+                color: var(--text-color-primary);
+                background-color: transparent;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.34);
+                }
+            }
+
+            & .emoji-icon {
+                width: 1.8rem;
+                height: 1.8rem;
+            }
+        }
+        & .post-btn {
+            font-size: 1.5rem;
+            font-weight: 500;
+            padding: 8px 0 8px 12px;
+            color: rgba(255, 255, 255, 0.34);
+            background-color: transparent;
+            cursor: pointer;
+
+            &.active {
+                color: var(--primary);
+            }
+        }
+    }
+}

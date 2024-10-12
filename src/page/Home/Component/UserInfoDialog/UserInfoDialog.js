@@ -1,7 +1,7 @@
 import HeadlessTippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
-import styles from './Home.module.scss';
+import styles from './UserInfoDialog.module.scss';
 import Image from '~/components/Image';
 import { memo, useRef, useState } from 'react';
 import * as httpRequest from '~/utils/httpRequest';

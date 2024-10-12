@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import styles from './Home.module.scss';
+import styles from './VideoTitle.module.scss';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -22,7 +22,6 @@ function VideoTitle({ name, title }) {
     return (
         <div className={cx('video-title')}>
             <a href="ahs" className={cx('username')}>
-                {/* {videoInfoRef.current.belong_to.full_name} */}
                 {name}
             </a>
             <p
@@ -36,7 +35,6 @@ function VideoTitle({ name, title }) {
                     })}
                     ref={titleRef}
                 >
-                    {/* {videoInfoRef.current.content} */}
                     {title}
                 </span>
                 {isOverFlow && (

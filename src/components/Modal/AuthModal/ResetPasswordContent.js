@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useModal } from '~/Provider/ModalProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,7 +13,7 @@ import Button from '~/components/Button';
 import config from '~/config';
 import { useAuth } from '~/Provider/AuthProvider';
 import httpRequest from '~/utils/httpRequest';
-import { UserContext } from '~/Provider/UserProvider';
+import { useUser } from '~/Provider/UserProvider';
 import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
@@ -28,7 +28,7 @@ function ResetPasswordContent() {
         password: false,
     });
     const [isShowPass, setIsShowPass] = useState(false);
-    const { setCurUser } = useContext(UserContext);
+    const { setCurUser } = useUser();
 
     const handleNameInput = (e) => {
         setInfo({ ...info, username: e.target.value });

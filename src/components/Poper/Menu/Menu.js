@@ -1,23 +1,25 @@
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Wrapper as PoperWrapper } from '~/components/Poper';
 import MenuItem from './MenuItem';
 import Header from './Header';
 import styles from './Menu.module.scss';
 import config from '~/config';
-import { UserContext } from '~/Provider/UserProvider';
+import { useUser } from '~/Provider/UserProvider';
 import { ConfirmModal } from '~/components/Modal';
 
 const cx = classNames.bind(styles);
 const defaultFn = () => {};
 
 function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
-    const { curUser, path } = useContext(UserContext);
+    const { curUser, path } = useUser();
 
-    const [history, setHistory] = useState([{ data: config.headerMenu.PUBLIC_MENU_ITEMS }]);
+    const [history, setHistory] = useState([
+        { data: config.headerMenu.PUBLIC_MENU_ITEMS },
+    ]);
     const current = history[history.length - 1];
 
     const [isShowConfirmModal, setIsShowConfirmModal] = useState(false);
@@ -74,7 +76,9 @@ function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
             //tabindex: not allow using tab on keyboard to focus element
             <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
                 <PoperWrapper className={cx('menu-poper')}>
-                    {history.length > 1 && <Header title={current.title} onBack={handleBack} />}
+                    {history.length > 1 && (
+                        <Header title={current.title} onBack={handleBack} />
+                    )}
                     <div className={cx('body')}>{renderItem()}</div>
                 </PoperWrapper>
             </div>
@@ -98,7 +102,10 @@ function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
             >
                 {children}
             </Tippy>
-            <ConfirmModal isOpen={isShowConfirmModal} handleCancel={handleCloseModal} />
+            <ConfirmModal
+                isOpen={isShowConfirmModal}
+                handleCancel={handleCloseModal}
+            />
         </>
     );
 }

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import { useContext } from 'react';
 
 import styles from './Header.module.scss';
 import images from '~/assets/images';
@@ -14,7 +13,7 @@ import { InboxIcon, MessageIcon } from '~/components/Icons/Icons';
 import Image from '~/components/Image';
 import Search from '../Search/Search';
 import config from '~/config';
-import { UserContext } from '~/Provider/UserProvider';
+import { useUser } from '~/Provider/UserProvider';
 import { useModal } from '~/Provider/ModalProvider';
 
 const cx = classNames.bind(styles);
@@ -32,7 +31,7 @@ const handleMenuChange = (menuItem) => {
 };
 
 function Header() {
-    const { curUser, path, isAuthenticate } = useContext(UserContext);
+    const { curUser, path, isAuthenticate } = useUser();
     const { onOpenModal } = useModal();
 
     return (

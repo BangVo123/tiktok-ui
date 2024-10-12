@@ -1,0 +1,67 @@
+.tippy-wrapper {
+    width: 320px;
+    height: 230px;
+    height: 100%;
+    padding: 20px;
+    background-color: rgb(37, 37, 37);
+    border-radius: 8px;
+
+    & .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        & .tippy-avt {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+        }
+
+        & .following {
+            border-color: var(--text-color-primary);
+            color: var(--text-color-primary);
+        }
+    }
+
+    & .body {
+        margin-top: 16px;
+
+        & .user-name {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        & .name {
+            display: block;
+            margin-top: 4px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        & .info {
+            display: flex;
+            font-size: 1.6rem;
+            margin-top: 12px;
+
+            & .tippy-nums {
+                font-weight: 700;
+                margin-right: 4px;
+            }
+
+            & .info-header {
+                font-weight: 400;
+                margin-right: 12px;
+            }
+        }
+    }
+    & .footer {
+        padding-top: 36px;
+
+        & .bio {
+            font-size: 1.4rem;
+            font-weight: 400;
+        }
+    }
+}

@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import routes from './routes';
 import DefaultLayout from './layouts';
 import * as httpRequest from './utils/httpRequest';
-import { UserContext } from './Provider/UserProvider';
+import { useUser } from './Provider/UserProvider';
 import ProtectRoutes from './components/ProtectRoute';
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
         paginateRef,
         setFavorite,
         setFollow,
-    } = useContext(UserContext);
+    } = useUser();
 
     useEffect(() => {
         const fetchData = async () => {
