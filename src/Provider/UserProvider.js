@@ -10,6 +10,7 @@ const UserProvider = ({ children }) => {
     const [favorite, setFavorite] = useState({ likes: [], loves: [] });
     const [follow, setFollow] = useState([]);
     const paginateRef = useRef({ page: 1, limit: 5 });
+    const socketInstance = useRef();
 
     return (
         <UserContext.Provider
@@ -27,6 +28,7 @@ const UserProvider = ({ children }) => {
                 setFavorite,
                 follow,
                 setFollow,
+                socketInstance,
             }}
         >
             {children}

@@ -28,15 +28,17 @@ import {
     faLightbulb,
     faListUl,
 } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useModal } from '~/Provider/ModalProvider';
 import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
 function Sidebar({ onShowModal }) {
-    const { curUser, path } = useUser();
+    const { isAuthenticate, curUser, path } = useUser();
     const { onOpenModal } = useModal();
+
+    const navigate = useNavigate();
 
     const handleEmptyFunction = (e) => {
         e.preventDefault();
@@ -67,7 +69,7 @@ function Sidebar({ onShowModal }) {
                                 icon={<DefaultFollowIcon />}
                                 activeIcon={<ActiveFollowIcon />}
                             />
-                            {Object.keys(curUser).length !== 0 ? (
+                            {isAuthenticate ? (
                                 <MenuItem
                                     title={'Friend'}
                                     to={config.routes.friend}
@@ -87,7 +89,7 @@ function Sidebar({ onShowModal }) {
                                 to={config.routes.profile}
                                 icon={
                                     <>
-                                        {Object.keys(curUser).length !== 0 ? (
+                                        {isAuthenticate ? (
                                             <Image
                                                 src={curUser?.avatar}
                                                 className={cx('menu-avt')}
@@ -104,13 +106,17 @@ function Sidebar({ onShowModal }) {
                                 }
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    onOpenModal();
+                                    if (!isAuthenticate) {
+                                        onOpenModal();
+                                    } else {
+                                        navigate('/profile');
+                                    }
                                 }}
                             />
                         </Menu>
                     </div>
 
-                    {Object.keys(curUser).length !== 0 ? (
+                    {isAuthenticate ? (
                         <FollowingAccounts lable="Following accounts" />
                     ) : (
                         <div className={cx('container')}>

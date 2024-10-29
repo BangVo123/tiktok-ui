@@ -1,0 +1,91 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: 12px 0;
+
+    & .user-avatar {
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        border-radius: 50%;
+    }
+
+    & .content {
+        flex: 1;
+        margin-left: 4px;
+
+        & .user-name {
+            font-size: 1.6rem;
+            font-weight: 600;
+
+            &:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+
+        & .comment {
+            max-width: calc(26vw - 24px - 40px - 12px);
+            font-size: 1.4rem;
+            font-weight: 300;
+            word-wrap: break-word;
+            white-space: initial;
+            overflow-wrap: break-word;
+        }
+
+        & .more {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--text-color-secondary);
+
+            & .like-group {
+                margin-left: 16px;
+                cursor: pointer;
+
+                & .heart-icon {
+                    margin-left: 4px;
+                }
+
+                &.active {
+                    color: var(--primary);
+                }
+            }
+
+            & .reply-btn {
+                margin-left: 16px;
+                color: var(--text-color-secondary);
+                background-color: transparent;
+
+                &:hover {
+                    color: var(--primary);
+                    cursor: pointer;
+                }
+            }
+
+            & .delete-btn {
+                margin-left: 12px;
+                padding: 4px 8px;
+                border-radius: 4px;
+                background-color: transparent;
+                color: var(--text-color-secondary);
+
+                &:hover {
+                    cursor: pointer;
+                    color: var(--primary);
+                }
+            }
+        }
+
+        & .see-more-btn {
+            color: var(--text-color-secondary);
+            background-color: transparent;
+            cursor: pointer;
+
+            & .down-icon {
+                margin-left: 4px;
+            }
+        }
+    }
+}

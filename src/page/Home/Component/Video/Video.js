@@ -12,6 +12,7 @@ import Option from '../VideoOptions/Option';
 import VideoTitle from '../VideoTitle/VideoTitle';
 import VideoActionBar from '../VideoActionBar';
 import Comment from '../Comment/Comment';
+import { useUser } from '~/Provider/UserProvider';
 
 const cx = classNames.bind(styles);
 
@@ -19,7 +20,7 @@ const VideoContext = createContext();
 export const useVideo = () => useContext(VideoContext);
 
 function Video({ video }) {
-    const videoInfoRef = useRef(video);
+    const { socketInstance } = useUser();
     const videoRef = useRef(null);
     const progressRef = useRef();
     const compRef = useRef();
@@ -43,7 +44,12 @@ function Video({ video }) {
         const width = curPercent * videoRef.current.offsetWidth;
         progressRef.current.style.width = `${width}px`;
     };
-    const handleToggleComment = () => {
+    const handleToggleComment = async () => {
+        if (isShowComment) {
+            socketInstance.current.emit('leave', video._id);
+        } else {
+            socketInstance.current.emit('join', video._id);
+        }
         setIsShowComment((prev) => !prev);
     };
 
@@ -93,7 +99,12 @@ function Video({ video }) {
     }, [compRef.current]);
 
     return (
-        <VideoContext.Provider value={{ videoRef: videoRef, videoInfo: video }}>
+        <VideoContext.Provider
+            value={{
+                videoRef: videoRef,
+                videoInfo: video,
+            }}
+        >
             <div className={cx('video-item-wrapper')} ref={compRef}>
                 <div className={cx('main-content')}>
                     <div
@@ -111,7 +122,7 @@ function Video({ video }) {
                                 onTimeUpdate={handleUpdateProgress}
                             >
                                 <source
-                                    src={videoInfoRef.current.url}
+                                    src={video?.url || ''}
                                     type="video/mp4"
                                 />
                             </video>
@@ -126,8 +137,8 @@ function Video({ video }) {
                                 ></div>
                             </div>
                             <VideoTitle
-                                name={videoInfoRef.current.belong_to.full_name}
-                                title={videoInfoRef.current.content}
+                                name={video?.belong_to.full_name || ''}
+                                title={video?.content || ''}
                             />
                         </div>
                     </div>

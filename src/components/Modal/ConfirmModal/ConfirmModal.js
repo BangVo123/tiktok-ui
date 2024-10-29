@@ -1,26 +1,10 @@
 import classNames from 'classnames/bind';
-import { useUser } from '~/Provider/UserProvider';
 import styles from './ConfirmModal.module.scss';
 import Button from '../../Button';
-import httpRequest from '~/utils/httpRequest';
 
 const cx = classNames.bind(styles);
 
-function ConfirmModal({ isOpen, handleCancel }) {
-    const { setCurUser } = useUser();
-
-    const handleAccept = async () => {
-        // call api to logout here
-        try {
-            await httpRequest.get('/auth/logout', { withCredentials: true });
-            //set curUser = null t reload page, hide confirm dialog
-            setCurUser({});
-            handleCancel();
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
+function ConfirmModal({ isOpen, handleCancel, handleAccept, content }) {
     if (!isOpen) return null;
     return (
         <div className={cx('wrapper')}>
@@ -28,9 +12,7 @@ function ConfirmModal({ isOpen, handleCancel }) {
             <div className={cx('body')}>
                 <div className={cx('content')}>
                     <div className={cx('content-wrapper')}>
-                        <div className={cx('title')}>
-                            Are you sure you want to log out?
-                        </div>
+                        <div className={cx('title')}>{content}</div>
                         <div className={cx('btn-group')}>
                             <Button
                                 className={cx('btn', 'cancel-btn')}

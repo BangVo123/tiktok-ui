@@ -4,9 +4,11 @@
     margin: 2rem 0;
     width: 26vw;
     min-width: 20vw;
+    //header 60px, padding x 2rem
+    max-height: calc(100vh - 60px - 40px);
     align-self: stretch;
     border-radius: 1.6rem;
-    padding: 1.2rem 0.8rem 1.2rem 1.2rem;
+    padding: 1.2rem;
     background-color: var(--background-secondary);
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 
@@ -14,6 +16,7 @@
         display: flex;
         justify-content: space-between;
         padding: 8px 4px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
         & .close-btn {
             padding: 0 8px;
@@ -22,7 +25,9 @@
     }
 
     & .comment-body {
+        max-width: calc(100% - 24px);
         flex-grow: 1;
+        overflow-y: overlay;
     }
 
     & .comment-footer {

@@ -10,12 +10,14 @@ import styles from './Menu.module.scss';
 import config from '~/config';
 import { useUser } from '~/Provider/UserProvider';
 import { ConfirmModal } from '~/components/Modal';
+import * as httpRequest from '~/utils/httpRequest';
 
 const cx = classNames.bind(styles);
 const defaultFn = () => {};
 
 function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
-    const { curUser, path } = useUser();
+    const { curUser, path, setCurUser, setIsAuthenticate, isAuthenticate } =
+        useUser();
 
     const [history, setHistory] = useState([
         { data: config.headerMenu.PUBLIC_MENU_ITEMS },
@@ -33,7 +35,7 @@ function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
     };
 
     useEffect(() => {
-        if (Object.keys(curUser).length === 0) {
+        if (!isAuthenticate) {
             setHistory([{ data: config.headerMenu.PUBLIC_MENU_ITEMS }]);
         } else {
             if (path === '/upload') {
@@ -55,9 +57,6 @@ function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
                         if (isParent) {
                             setHistory((prev) => [...prev, item.children]);
                         }
-                        // else {
-                        //     onChange(item);
-                        // }
                         if (item.title === 'Log out') {
                             handleOpenConfirmModal();
                         }
@@ -90,6 +89,23 @@ function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
         setHistory((prev) => prev.slice(0, 1));
     };
 
+    const handleAccept = async () => {
+        // call api to logout here
+        try {
+            await httpRequest.get(
+                '/auth/logout',
+                {},
+                { withCredentials: true },
+            );
+            //set curUser = null t reload page, hide confirm dialog
+            setCurUser();
+            setIsAuthenticate(false);
+            handleCloseModal();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     return (
         <>
             <Tippy
@@ -105,6 +121,8 @@ function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
             <ConfirmModal
                 isOpen={isShowConfirmModal}
                 handleCancel={handleCloseModal}
+                handleAccept={handleAccept}
+                content="Are you sure you want to log out?"
             />
         </>
     );

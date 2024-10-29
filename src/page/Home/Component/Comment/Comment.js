@@ -3,47 +3,104 @@ import styles from './Comment.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceLaugh, faX } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
-import { useState, useContext } from 'react';
+import { useEffect, useState, useRef, memo } from 'react';
+
 import { useUser } from '~/Provider/UserProvider';
 import { useModal } from '~/Provider/ModalProvider';
-import * as httpRequest from '~/utils/httpRequest';
 import { useVideo } from '../Video';
+import CommentItem from './CommentItem/CommentItem';
+import * as httpRequest from '~/utils/httpRequest';
 
 const cx = classNames.bind(styles);
 
-function Comment({ handleToggleComment, numsComment }) {
-    const { isAuthenticate, curUser } = useUser(useUser);
+function Comment({ handleToggleComment }) {
+    const { isAuthenticate, curUser, socketInstance } = useUser();
     const { videoInfo } = useVideo();
     const { onOpenModal } = useModal();
-    const [comment, setComment] = useState('');
+    const commentPage = useRef({ page: 1, limit: 10 });
+    const [comments, setComments] = useState([]);
+
+    const [comment, setComment] = useState({
+        sender: {
+            avatar: curUser.avatar,
+            full_name: curUser.full_name,
+        },
+        content: '',
+        like: 0,
+    });
+
+    // socketInstance.current.on('newComment', (comment) => {
+    //     setComments((prev) => [comment, ...prev]);
+    // });
+
     const handleSetComment = (e) => {
-        setComment(e.target.value);
+        setComment((prev) => ({ ...prev, content: e.target.value }));
     };
     const handleComment = async () => {
         if (!isAuthenticate) {
             onOpenModal();
         } else {
-            const res = await httpRequest.post(
-                '/comments',
-                {
-                    comment: comment,
-                    belong_to: videoInfo._id,
-                    sender: curUser._id,
-                },
-                { withCredentials: true },
+            socketInstance.current.emit(
+                'comment',
+                comment,
+                videoInfo._id,
+                curUser._id,
             );
-
-            if (res.status === 201) {
-            } else {
-            }
+            videoInfo.comment = videoInfo.comment + 1;
+            setComments((prev) => [comment, ...prev]);
+            setComment((prev) => ({ ...prev, content: '' }));
         }
     };
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleComment();
+        }
+    };
+
+    useEffect(() => {
+        if (comments.length === 0) {
+            const fetchData = async () => {
+                const res = await httpRequest.get(
+                    `/comments/${videoInfo._id}`,
+                    {
+                        page: commentPage.current.page,
+                        limit: commentPage.current.limit,
+                    },
+                    { withCredentials: true },
+                );
+
+                setComments(res.data);
+            };
+            fetchData();
+        }
+
+        const handleNewComment = (comment) => {
+            videoInfo.comment = videoInfo.comment + 1;
+            setComments((prev) => [comment, ...prev]);
+        };
+        socketInstance.current.on('newComment', handleNewComment);
+        return () => {
+            socketInstance.current.off('newComment');
+        };
+    }, []);
+
+    // useEffect(() => {
+    //     const handleNewComment = (comment) => {
+    //         videoInfo.comment = videoInfo.comment + 1;
+    //         setComments((prev) => [comment, ...prev]);
+    //     };
+    //     socketInstance.current.on('newComment', handleNewComment);
+    //     return () => {
+    //         socketInstance.current.off('newComment');
+    //     };
+    // }, []);
 
     return (
         <div className={cx('wrapper')}>
             <header className={cx('comment-header')}>
                 <h4 className={cx('header-title')}>
-                    Comments (<span>{numsComment}</span>)
+                    Comments (<span>{videoInfo.comment}</span>)
                 </h4>
                 <span
                     className={cx('close-btn')}
@@ -52,13 +109,27 @@ function Comment({ handleToggleComment, numsComment }) {
                     <FontAwesomeIcon icon={faX} />
                 </span>
             </header>
-            <div className={cx('comment-body')}></div>
+            <div className={cx('comment-body')}>
+                {comments &&
+                    comments.map((el, idx) => (
+                        <CommentItem
+                            key={`${Date.now()}_${Math.random().toString(36)}`}
+                            avatar={el.sender.avatar}
+                            username={el.sender.full_name}
+                            comment={el.content}
+                            numsLike={el.like}
+                        />
+                    ))}
+            </div>
             <footer className={cx('comment-footer')}>
                 <div className={cx('input-group')}>
                     <input
                         className={cx('comment-input')}
                         type="text"
                         placeholder="Add comment..."
+                        autoFocus
+                        value={comment.content}
+                        onKeyDown={(e) => handleKeyDown(e)}
                         onChange={(e) => handleSetComment(e)}
                     />
                     <Tippy
@@ -82,8 +153,10 @@ function Comment({ handleToggleComment, numsComment }) {
                     </Tippy>
                 </div>
                 <button
-                    disabled={comment.trim() === ''}
-                    className={cx('post-btn', { active: !!comment.trim() })}
+                    disabled={comment.content.trim() === ''}
+                    className={cx('post-btn', {
+                        active: !!comment.content.trim(),
+                    })}
                     onClick={handleComment}
                 >
                     Post
@@ -93,4 +166,4 @@ function Comment({ handleToggleComment, numsComment }) {
     );
 }
 
-export default Comment;
+export default memo(Comment);

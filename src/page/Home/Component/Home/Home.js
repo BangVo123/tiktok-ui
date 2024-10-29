@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useUser } from '~/Provider/UserProvider';
 import styles from './Home.module.scss';
 import Video from '../Video';
@@ -58,17 +58,20 @@ function Home() {
     );
 
     return (
-        <div className={cx('wrapper')}>
-            {videos &&
-                videos.map((el, idx, videos) => (
-                    <div
-                        key={el.id || idx}
-                        ref={idx === videos.length - 2 ? callback : null}
-                    >
-                        <Video video={el} />
-                    </div>
-                ))}
-        </div>
+        <>
+            {videos && (
+                <div className={cx('wrapper')}>
+                    {videos.map((el, idx, videos) => (
+                        <div
+                            key={el.id || idx}
+                            ref={idx === videos.length - 2 ? callback : null}
+                        >
+                            <Video video={el} />
+                        </div>
+                    ))}
+                </div>
+            )}
+        </>
     );
 }
 

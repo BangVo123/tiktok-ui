@@ -97,7 +97,7 @@ function Header() {
                     </>
                 )}
                 <Menu onChange={handleMenuChange}>
-                    {Object.keys(curUser).length !== 0 ? (
+                    {isAuthenticate ? (
                         <Image
                             className={cx('avt')}
                             src={curUser.avatar}

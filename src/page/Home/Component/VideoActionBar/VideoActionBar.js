@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, memo } from 'react';
+import { useState, useEffect, useContext, memo, useRef } from 'react';
 import classNames from 'classnames/bind';
 import styles from './VideoActionBar.module.scss';
 import {
@@ -19,7 +19,7 @@ import { useDebounce } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
-function VideoActionBar({ handleToggleComment }) {
+function VideoActionBar({ handleToggleComment, socket }) {
     const { favorite, curUser, follow, setFollow } = useUser();
     const { videoInfo } = useVideo();
 
@@ -27,8 +27,8 @@ function VideoActionBar({ handleToggleComment }) {
     const [isLove, setIsLove] = useState(false);
     const [isFollow, setIsFollow] = useState(false);
 
-    const debouncedLikeValue = useDebounce(isLike, 500);
-    const debouncedLoveValue = useDebounce(isLove, 500);
+    // let debouncedLikeValue = useDebounce(isLike, 500);
+    // let debouncedLoveValue = useDebounce(isLove, 500);
 
     const handleSetLike = () => {
         if (isLike) {
@@ -67,13 +67,13 @@ function VideoActionBar({ handleToggleComment }) {
     };
 
     useEffect(() => {
-        if (favorite.likes.includes(videoInfo._id)) {
+        if (favorite.likes.includes(videoInfo?._id)) {
             setIsLike(true);
         }
-        if (favorite.loves.includes(videoInfo._id)) {
+        if (favorite.loves.includes(videoInfo?._id)) {
             setIsLove(true);
         }
-        if (follow.includes(videoInfo.belong_to._id)) {
+        if (follow.includes(videoInfo?.belong_to._id)) {
             setIsFollow(true);
         }
     }, [favorite, follow]);
@@ -89,34 +89,34 @@ function VideoActionBar({ handleToggleComment }) {
             console.log(error);
         }
     };
-    useEffect(() => {
-        const isOldLike = favorite.likes.includes(videoInfo._id);
-        if (isOldLike !== isLike) {
-            handleEmotion({ path: 'like', val: videoInfo._id });
-        }
-    }, [debouncedLikeValue]);
-    useEffect(() => {
-        const isOldLove = favorite.loves.includes(videoInfo._id);
-        if (isOldLove !== isLike) {
-            handleEmotion({ path: 'love', val: videoInfo._id });
-        }
-    }, [debouncedLoveValue]);
+    // useEffect(() => {
+    //     const isOldLike = favorite.likes.includes(videoInfo._id);
+    //     if (isOldLike !== isLike) {
+    //         handleEmotion({ path: 'like', val: videoInfo._id });
+    //     }
+    // }, [debouncedLikeValue]);
+    // useEffect(() => {
+    //     const isOldLove = favorite.loves.includes(videoInfo._id);
+    //     if (isOldLove !== isLike) {
+    //         handleEmotion({ path: 'love', val: videoInfo._id });
+    //     }
+    // }, [debouncedLoveValue]);
 
     return (
         <div className={cx('action-bar')}>
             {/* Custom action bar item, default 48px 400px */}
             <UserInfoDialog
-                info={videoInfo.belong_to}
-                showFollowBtn={videoInfo.belong_to._id !== curUser._id}
+                info={videoInfo?.belong_to}
+                showFollowBtn={videoInfo?.belong_to._id !== curUser?._id}
                 isFollow={isFollow}
             >
                 <div className={cx('user-item')}>
                     <Image
                         className={cx('avt')}
-                        src={videoInfo.belong_to.avatar}
+                        src={videoInfo?.belong_to.avatar}
                         alt=""
                     />
-                    {videoInfo.belong_to._id === curUser._id ? null : (
+                    {videoInfo?.belong_to._id === curUser?._id ? null : (
                         <span className={cx('check')} onClick={handleFollow}>
                             <FontAwesomeIcon
                                 className={cx('check-icon')}
@@ -133,7 +133,7 @@ function VideoActionBar({ handleToggleComment }) {
                 <span className={cx('icon-wrap', 'like-icon')}>
                     <FontAwesomeIcon className={cx('icon')} icon={faHeart} />
                 </span>
-                <span className={cx('item-nums')}>{videoInfo.like}</span>
+                <span className={cx('item-nums')}>{videoInfo?.like}</span>
             </div>
             <div
                 className={cx('action-item')}
@@ -145,7 +145,7 @@ function VideoActionBar({ handleToggleComment }) {
                         icon={faCommentDots}
                     />
                 </span>
-                <span className={cx('item-nums')}>{videoInfo.comment}</span>
+                <span className={cx('item-nums')}>{videoInfo?.comment}</span>
             </div>
             <div
                 className={cx('action-item', {
@@ -156,13 +156,13 @@ function VideoActionBar({ handleToggleComment }) {
                 <span className={cx('icon-wrap', 'favorite-icon')}>
                     <FavoriteIcon className={cx('icon')} />
                 </span>
-                <span className={cx('item-nums')}>{videoInfo.love}</span>
+                <span className={cx('item-nums')}>{videoInfo?.love}</span>
             </div>
             <div className={cx('action-item')}>
                 <span className={cx('icon-wrap')}>
                     <FontAwesomeIcon className={cx('icon')} icon={faShare} />
                 </span>
-                <span className={cx('item-nums')}>{videoInfo.share}</span>
+                <span className={cx('item-nums')}>{videoInfo?.share}</span>
             </div>
         </div>
     );

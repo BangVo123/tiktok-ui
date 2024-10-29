@@ -1,12 +1,13 @@
-import { Fragment, useContext, useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import routes from './routes';
 import DefaultLayout from './layouts';
 import * as httpRequest from './utils/httpRequest';
 import { useUser } from './Provider/UserProvider';
 import ProtectRoutes from './components/ProtectRoute';
+import io from 'socket.io-client';
 
 function App() {
     const {
@@ -17,6 +18,7 @@ function App() {
         paginateRef,
         setFavorite,
         setFollow,
+        socketInstance,
     } = useUser();
 
     useEffect(() => {
@@ -32,6 +34,9 @@ function App() {
                     setVideos(videosRes.data);
                 }
 
+                // const cookies = document.cookie.split('; ');
+                // console.log(cookies);
+
                 console.log('Fetching user data...');
                 const userRes = await httpRequest.get(
                     '/users',
@@ -46,6 +51,9 @@ function App() {
                     setFavorite(userRes.data.favorite);
                     setFollow(userRes.data.follow);
                 }
+
+                //connect socket
+                socketInstance.current = io(process.env.REACT_APP_SOCKET_URL);
             } catch (e) {
                 console.error('API Fetch Error:', e);
             }
@@ -54,6 +62,12 @@ function App() {
         if (Object.keys(curUser).length === 0) {
             fetchData();
         }
+
+        return () => {
+            if (socketInstance.current) {
+                socketInstance.current.disconnect();
+            }
+        };
     }, []);
 
     return (
