@@ -21,7 +21,7 @@ function VideoTitle({ name, title }) {
 
     return (
         <div className={cx('video-title')}>
-            <a href="ahs" className={cx('username')}>
+            <a href="/profile" className={cx('username')}>
                 {name}
             </a>
             <p

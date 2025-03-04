@@ -46,8 +46,8 @@ function Comment({ handleToggleComment }) {
                 videoInfo._id,
                 curUser._id,
             );
-            videoInfo.comment = videoInfo.comment + 1;
-            setComments((prev) => [comment, ...prev]);
+            // videoInfo.comment = videoInfo.comment + 1;
+            // setComments((prev) => [comment, ...prev]);
             setComment((prev) => ({ ...prev, content: '' }));
         }
     };

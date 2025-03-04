@@ -53,7 +53,7 @@ function CommentItem({ avatar, username, comment, numsLike }) {
                         icon={faAngleDown}
                     />
                 </button>
-                <div className={cx('more-replies')}></div> */}  
+                <div className={cx('more-replies')}></div> */}
             </div>
         </div>
     );

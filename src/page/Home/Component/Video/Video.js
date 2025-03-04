@@ -13,6 +13,7 @@ import VideoTitle from '../VideoTitle/VideoTitle';
 import VideoActionBar from '../VideoActionBar';
 import Comment from '../Comment/Comment';
 import { useUser } from '~/Provider/UserProvider';
+import { useModal } from '~/Provider/ModalProvider';
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +21,8 @@ const VideoContext = createContext();
 export const useVideo = () => useContext(VideoContext);
 
 function Video({ video }) {
-    const { socketInstance } = useUser();
+    const { socketInstance, isAuthenticate } = useUser();
+    const { onOpenModal } = useModal();
     const videoRef = useRef(null);
     const progressRef = useRef();
     const compRef = useRef();
@@ -45,6 +47,11 @@ function Video({ video }) {
         progressRef.current.style.width = `${width}px`;
     };
     const handleToggleComment = async () => {
+        if (!isAuthenticate) {
+            onOpenModal();
+            return;
+        }
+
         if (isShowComment) {
             socketInstance.current.emit('leave', video._id);
         } else {

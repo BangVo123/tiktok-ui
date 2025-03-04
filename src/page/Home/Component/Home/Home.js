@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useUser } from '~/Provider/UserProvider';
 import styles from './Home.module.scss';
 import Video from '../Video';

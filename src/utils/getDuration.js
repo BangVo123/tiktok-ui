@@ -1,5 +1,5 @@
 const getDuration = (file) =>
-    new Promise((resolve, reject) => {
+    new Promise((resolve) => {
         var video = document.createElement('video');
         video.preload = 'metadata';
 
