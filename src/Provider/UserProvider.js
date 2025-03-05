@@ -11,6 +11,7 @@ const UserProvider = ({ children }) => {
     const [follow, setFollow] = useState([]);
     const paginateRef = useRef({ page: 1, limit: 5 });
     const socketInstance = useRef();
+    const accountRelations = useRef();
 
     return (
         <UserContext.Provider
@@ -23,12 +24,13 @@ const UserProvider = ({ children }) => {
                 setPath,
                 videos,
                 setVideos,
-                paginateRef,
                 favorite,
                 setFavorite,
                 follow,
                 setFollow,
+                paginateRef,
                 socketInstance,
+                accountRelations,
             }}
         >
             {children}

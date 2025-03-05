@@ -18,6 +18,7 @@ function App() {
         paginateRef,
         setFavorite,
         setFollow,
+        accountRelations,
         socketInstance,
     } = useUser();
 
@@ -34,9 +35,6 @@ function App() {
                     setVideos(videosRes.data);
                 }
 
-                // const cookies = document.cookie.split('; ');
-                // console.log(cookies);
-
                 console.log('Fetching user data...');
                 const userRes = await httpRequest.get(
                     '/users',
@@ -45,11 +43,13 @@ function App() {
                         withCredentials: true,
                     },
                 );
+
                 if (userRes.data) {
                     setCurUser(userRes.data.user);
                     setIsAuthenticate(true);
                     setFavorite(userRes.data.favorite);
                     setFollow(userRes.data.follow);
+                    accountRelations.current = userRes.data.accRelations;
                 }
 
                 //connect socket

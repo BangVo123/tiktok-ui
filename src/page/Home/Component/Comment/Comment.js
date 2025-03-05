@@ -96,6 +96,8 @@ function Comment({ handleToggleComment }) {
     //     };
     // }, []);
 
+    console.log(comments);
+
     return (
         <div className={cx('wrapper')}>
             <header className={cx('comment-header')}>
@@ -111,7 +113,7 @@ function Comment({ handleToggleComment }) {
             </header>
             <div className={cx('comment-body')}>
                 {comments &&
-                    comments.map((el, idx) => (
+                    comments.map((el) => (
                         <CommentItem
                             key={`${Date.now()}_${Math.random().toString(36)}`}
                             avatar={el.sender.avatar}

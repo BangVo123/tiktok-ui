@@ -34,7 +34,7 @@ import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
-function Sidebar({ onShowModal }) {
+function Sidebar() {
     const { isAuthenticate, curUser, path } = useUser();
     const { onOpenModal } = useModal();
 
@@ -117,7 +117,7 @@ function Sidebar({ onShowModal }) {
                     </div>
 
                     {isAuthenticate ? (
-                        <FollowingAccounts lable="Following accounts" />
+                        <FollowingAccounts label="Following accounts" />
                     ) : (
                         <div className={cx('container')}>
                             <h4 className={cx('title')}>
