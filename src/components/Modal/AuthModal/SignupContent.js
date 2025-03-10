@@ -113,6 +113,7 @@ function SignupContent() {
                     username,
                     password,
                     code,
+                    action: 'signup',
                 },
                 { withCredentials: true },
             );

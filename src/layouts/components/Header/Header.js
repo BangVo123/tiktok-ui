@@ -100,7 +100,7 @@ function Header() {
                     {isAuthenticate ? (
                         <Image
                             className={cx('avt')}
-                            src={curUser.avatar}
+                            src={curUser?.avatar}
                             alt="Nguyen Van A"
                         />
                     ) : (

@@ -13,6 +13,7 @@ function App() {
     const {
         curUser,
         setCurUser,
+        isAuthenticate,
         setIsAuthenticate,
         setVideos,
         paginateRef,
@@ -30,6 +31,8 @@ function App() {
                     page: paginateRef.current.page,
                     limit: paginateRef.current.limit,
                 });
+
+                console.log('videosRes.data : ', videosRes.data);
                 if (videosRes.data) {
                     paginateRef.current.page = 2;
                     setVideos(videosRes.data);

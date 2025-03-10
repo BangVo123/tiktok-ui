@@ -35,6 +35,9 @@ const auth = {
             {
                 Icon: UserIcon,
                 title: 'Use email',
+                // onclick: () => {
+
+                // }
             },
             {
                 Icon: FacebookIcon,

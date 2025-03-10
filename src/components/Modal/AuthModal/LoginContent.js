@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useModal } from '~/Provider/ModalProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faXmark } from '@fortawesome/free-solid-svg-icons';
+import io from 'socket.io-client';
 import styles from './AuthModal.module.scss';
 import Button from '~/components/Button';
 import { useAuth } from '~/Provider/AuthProvider';
@@ -16,7 +17,14 @@ function LoginContent() {
     const { setComponent } = useAuth();
     const [info, setInfo] = useState({ username: '', password: '' });
     const [isShowPass, setIsShowPass] = useState(false);
-    const { setCurUser } = useUser();
+    const {
+        setCurUser,
+        setIsAuthenticate,
+        setFavorite,
+        setFollow,
+        accountRelations,
+        socketInstance,
+    } = useUser();
 
     const handleNameInput = (e) => {
         setInfo({ ...info, username: e.target.value });
@@ -32,11 +40,26 @@ function LoginContent() {
         try {
             const user = await httpRequest.post(
                 '/auth/login',
-                { username, password },
+                { username, password, action: 'login' },
                 { withCredentials: true },
             );
+
+            //show toast when info is not true
             setCurUser(user);
+            setIsAuthenticate(true);
             onCloseModal();
+
+            const userRes = await httpRequest.get('/users');
+
+            if (userRes.data) {
+                setCurUser(userRes.data.user);
+                setIsAuthenticate(true);
+                setFavorite(userRes.data.favorite);
+                setFollow(userRes.data.follow);
+                accountRelations.current = userRes.data.accRelations;
+
+                socketInstance.current = io(process.env.REACT_APP_SOCKET_URL);
+            }
         } catch (err) {
             console.log(err);
         }

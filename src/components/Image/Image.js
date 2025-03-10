@@ -1,8 +1,10 @@
 import { useState, forwardRef, useEffect } from 'react';
-import classNames from 'classnames';
+import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import styles from './Image.module.scss';
 import images from '~/assets/images';
+
+const cx = classNames.bind(styles);
 
 const Image = forwardRef(({ src, alt = '', className, ...props }, ref) => {
     const [image, setImage] = useState(src);
@@ -17,7 +19,7 @@ const Image = forwardRef(({ src, alt = '', className, ...props }, ref) => {
 
     return (
         <img
-            className={classNames(styles.wrapper, className)}
+            className={cx('wrapper', className)}
             {...props}
             src={image || images.noImage}
             alt={alt}

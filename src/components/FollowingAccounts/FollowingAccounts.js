@@ -30,35 +30,37 @@ function FollowingAccounts({ label }) {
 
     return (
         <>
-            {accountRelations.current.following.length !== 0 && (
-                <div className={cx('wrapper')}>
-                    <p className={cx('label')}>{label}</p>
-                    {/* <AccountItem />
+            {accountRelations.current?.following &&
+                accountRelations.current?.following.length !== 0 && (
+                    <div className={cx('wrapper')}>
+                        <p className={cx('label')}>{label}</p>
+                        {/* <AccountItem />
                     <AccountItem />
                     <AccountItem /> */}
 
-                    {accountRelations.current.following.map((el, idx) => {
-                        if (idx < numItems)
-                            return (
-                                <AccountItem
-                                    key={el._id}
-                                    avt={el.following_id?.avatar}
-                                    fullname={el.following_id?.full_name}
-                                    tick={el.following_id?.tick}
-                                />
-                            );
-                    })}
+                        {accountRelations.current.following.map((el, idx) => {
+                            if (idx < numItems)
+                                return (
+                                    <AccountItem
+                                        key={el._id}
+                                        avt={el.following_id?.avatar}
+                                        fullname={el.following_id?.full_name}
+                                        tick={el.following_id?.tick}
+                                    />
+                                );
+                        })}
 
-                    {numItems < accountRelations.current.following.length && (
-                        <p
-                            className={cx('more-btn')}
-                            onClick={handleSetNumItems}
-                        >
-                            See more
-                        </p>
-                    )}
-                </div>
-            )}
+                        {numItems <
+                            accountRelations.current.following.length && (
+                            <p
+                                className={cx('more-btn')}
+                                onClick={handleSetNumItems}
+                            >
+                                See more
+                            </p>
+                        )}
+                    </div>
+                )}
         </>
     );
 }
