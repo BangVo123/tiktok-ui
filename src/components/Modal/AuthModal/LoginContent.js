@@ -66,7 +66,7 @@ function LoginContent() {
     };
 
     return (
-        <div className={cx('content')}>
+        <div className={cx('content')} >
             <button
                 className={cx('close-btn')}
                 onClick={() => {

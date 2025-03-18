@@ -47,7 +47,7 @@ function App() {
                     },
                 );
 
-                if (userRes.data) {
+                if (userRes?.data) {
                     setCurUser(userRes.data.user);
                     setIsAuthenticate(true);
                     setFavorite(userRes.data.favorite);

@@ -61,7 +61,7 @@ function Video({ video }) {
     };
 
     useEffect(() => {
-        const video = videoRef.current;
+        let videoInstance = videoRef.current;
         //intersection observer
         const observer = new IntersectionObserver(
             (entries) => {
@@ -78,12 +78,27 @@ function Video({ video }) {
                             hasScroll.current = true;
                         }
 
-                        if (video.paused || video.ended) {
-                            video.play();
+                        if (videoRef.current.paused || videoRef.current.ended) {
+                            // videoRef.current.muted = true;
+                            videoRef.current
+                                .play()
+                                .then((_) => {
+                                    videoRef.current.muted = false;
+                                })
+                                .catch(() => {
+                                    document.addEventListener(
+                                        'click',
+                                        () => {
+                                            videoRef.current.muted = false;
+                                            videoRef.current.play();
+                                        },
+                                        { once: true },
+                                    );
+                                });
                         }
                     } else {
-                        if (!video.paused) {
-                            video.pause();
+                        if (!videoRef.current?.paused) {
+                            videoRef.current?.pause();
                         }
                         hasScroll.current = false;
                     }
@@ -102,8 +117,20 @@ function Video({ video }) {
             if (compRef.current) {
                 observer.unobserve(compRef.current);
             }
+
+            // if (videoRef.current && !videoRef.current.paused) {
+            //     videoRef.current.pause();
+            // }
+
+            if (videoInstance && !videoInstance.paused) {
+                videoInstance.pause();
+                console.log('OK');
+            }
+
+            new AbortController().abort();
         };
-    }, [compRef.current]);
+    }, []);
+    // }, [compRef.current]);
 
     return (
         <VideoContext.Provider
@@ -122,7 +149,7 @@ function Video({ video }) {
                         <div className={cx('video-container')}>
                             <video
                                 className={cx('video')}
-                                muted={false}
+                                muted
                                 loop
                                 ref={videoRef}
                                 onClick={handleClick}

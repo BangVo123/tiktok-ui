@@ -9,13 +9,31 @@ import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function AccountInfoModal({ onCloseInfoModal }) {
-    const { curUser } = useUser();
-    const [active, setActive] = useState(0);
+function AccountInfoModal({ onCloseInfoModal, initIdx }) {
+    const { curUser, accountRelations } = useUser();
+    const [active, setActive] = useState(initIdx);
     const [currentMouseIdx, setCurrentMouseIdx] = useState(0);
+    const [currentItems, setCurrentItems] = useState(
+        initIdx === 0
+            ? accountRelations.current.following
+            : accountRelations.current.followers,
+    );
 
     const handleSetActive = (idx) => {
         setActive(idx);
+        switch (idx) {
+            case 0:
+                setCurrentItems(accountRelations.current.following);
+                break;
+            case 1:
+                setCurrentItems(accountRelations.current.followers);
+                break;
+            case 2:
+                setCurrentItems(accountRelations.current.friends);
+                break;
+            default:
+                break;
+        }
     };
     const handleSetPointer = (idx) => {
         setCurrentMouseIdx(idx);
@@ -24,13 +42,15 @@ function AccountInfoModal({ onCloseInfoModal }) {
         setCurrentMouseIdx(active);
     };
 
+    console.log(currentItems);
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('overlay')}></div>
             <div className={cx('content-wrapper')}>
                 <div className={cx('content')}>
                     <div className={cx('header')}>
-                        <h4 className={cx('username')}>ABC</h4>
+                        <h4 className={cx('username')}>{curUser.full_name}</h4>
                         <span
                             className={cx('close-btn')}
                             onClick={onCloseInfoModal}
@@ -83,7 +103,23 @@ function AccountInfoModal({ onCloseInfoModal }) {
                         </div>
                         <div className={cx('split')}></div>
                         <div className={cx('main-content')}>
-                            <div className={cx('item')}>
+                            {currentItems.length > 0
+                                ? currentItems.map((el) => (
+                                      <div
+                                          className={cx('item')}
+                                          key={el.following_id.id}
+                                      >
+                                          <AccountItem
+                                              data={el.following_id}
+                                              className={cx('account-item')}
+                                          />
+                                          <Button primary className={cx('btn')}>
+                                              Follow
+                                          </Button>
+                                      </div>
+                                  ))
+                                : null}
+                            {/* <div className={cx('item')}>
                                 <AccountItem
                                     data={curUser}
                                     className={cx('account-item')}
@@ -100,106 +136,7 @@ function AccountInfoModal({ onCloseInfoModal }) {
                                 <Button primary className={cx('btn')}>
                                     Follow
                                 </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
-                            <div className={cx('item')}>
-                                <AccountItem
-                                    data={curUser}
-                                    className={cx('account-item')}
-                                />
-                                <Button primary className={cx('btn')}>
-                                    Follow
-                                </Button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

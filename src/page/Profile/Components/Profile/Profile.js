@@ -7,6 +7,7 @@ import Button from '~/components/Button';
 import EditModal from '../EditModal';
 import AccountInfoModal from '../AccountInfoModal';
 import * as httpRequest from '../../../../utils/httpRequest';
+import Video from './Components/Video';
 
 const cx = classNames.bind(styles);
 
@@ -60,7 +61,7 @@ function Profile() {
                 <Image
                     className={cx('user-avatar')}
                     alt=""
-                    src={curUser.avatar}
+                    src={curUser?.avatar}
                 />
                 <div className={cx('user-info')}>
                     <h5 className={cx('username')}>{curUser.full_name}</h5>
@@ -149,13 +150,18 @@ function Profile() {
                     ></span>
                     <div className={cx('split-line')}></div>
                 </div>
-                <div className={cx('video-content')}></div>
+                <div className={cx('video-content')}>
+                    <Video />
+                </div>
             </div>
             {isShowEditModal && (
                 <EditModal onCloseEditModal={handleCloseEditModal} />
             )}
             {isShowAccountInfoModal && (
-                <AccountInfoModal onCloseInfoModal={handleCloseInfoModal} />
+                <AccountInfoModal
+                    onCloseInfoModal={handleCloseInfoModal}
+                    initIdx={currentIdxOfInfoModal}
+                />
             )}
         </div>
     );

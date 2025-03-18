@@ -6,8 +6,14 @@ import { Navigate } from 'react-router-dom';
 
 function ProtectRoutes({ children, private: isPrivate }) {
     const { isAuthenticate } = useUser();
+
     useEffect(() => {
-        if (isPrivate && !isAuthenticate) toast.warn('User not authenticate');
+        const timer = setTimeout(() => {
+            if (isPrivate && !isAuthenticate) console.log(1);
+            // toast.warn('User not authenticate');
+        }, 500);
+
+        return () => clearTimeout(timer);
     }, []);
 
     if (isPrivate && !isAuthenticate) {

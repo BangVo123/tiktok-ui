@@ -67,13 +67,13 @@ function VideoActionBar({ handleToggleComment, socket }) {
     };
 
     useEffect(() => {
-        if (favorite.likes.includes(videoInfo?._id)) {
+        if (favorite?.likes.includes(videoInfo?._id)) {
             setIsLike(true);
         }
-        if (favorite.loves.includes(videoInfo?._id)) {
+        if (favorite?.loves.includes(videoInfo?._id)) {
             setIsLove(true);
         }
-        if (follow.includes(videoInfo?.belong_to._id)) {
+        if (follow?.includes(videoInfo?.belong_to._id)) {
             setIsFollow(true);
         }
     }, [favorite, follow]);

@@ -11,8 +11,6 @@ function FollowingAccounts({ label }) {
     const { accountRelations } = useUser();
     const [numItems, setNumItems] = useState();
 
-    console.log(accountRelations);
-
     const handleSetNumItems = () => {
         setNumItems((prev) => {
             if (prev + 5 < accountRelations.current.following.length) {
@@ -23,7 +21,7 @@ function FollowingAccounts({ label }) {
     };
 
     useEffect(() => {
-        if (accountRelations.current.following.length < 3)
+        if (accountRelations.current?.following.length < 3)
             setNumItems(accountRelations.current.following.length);
         else setNumItems(3);
     }, []);

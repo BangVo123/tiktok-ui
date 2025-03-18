@@ -37,7 +37,7 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('logo')} tabIndex={-1}>
-                <Button to={config.routes.home}>
+                <Button to={config.routes.home} tabIndex={-1}>
                     <img src={images.logo} alt="" className={cx('tk-logo')} />
                 </Button>
                 {path === '/upload' ? (

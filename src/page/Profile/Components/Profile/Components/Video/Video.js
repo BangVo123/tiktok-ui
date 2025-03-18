@@ -4,7 +4,7 @@ import { useRef } from 'react';
 
 const cx = classNames.bind(styles);
 
-function Video({ src }) {
+function Video({ src = '' }) {
     const videoRef = useRef();
 
     const handlePlayVideo = () => {
