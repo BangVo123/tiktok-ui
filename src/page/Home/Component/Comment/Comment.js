@@ -22,7 +22,7 @@ function Comment({ handleToggleComment }) {
 
     const [comment, setComment] = useState({
         sender: {
-            avatar: curUser.avatar,
+            avatar: curUser?.avatar,
             full_name: curUser.full_name,
         },
         content: '',
