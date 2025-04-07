@@ -55,7 +55,7 @@ function Video({ video }) {
         if (isShowComment) {
             socketInstance.current.emit('leave', video._id);
         } else {
-            socketInstance.current.emit('join', video._id);
+            socketInstance.current?.emit('join', video._id);
         }
         setIsShowComment((prev) => !prev);
     };

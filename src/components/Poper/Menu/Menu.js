@@ -95,12 +95,13 @@ function Menu({ children, hideOnClick = false, onChange = defaultFn }) {
             await httpRequest.get(
                 '/auth/logout',
                 {},
-                { withCredentials: true },
+                // { withCredentials: true },
             );
             //set curUser = null t reload page, hide confirm dialog
             setCurUser();
             setIsAuthenticate(false);
             handleCloseModal();
+            localStorage.clear();
         } catch (err) {
             console.log(err);
         }

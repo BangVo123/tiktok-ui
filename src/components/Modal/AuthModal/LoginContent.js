@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 import styles from './AuthModal.module.scss';
 import Button from '~/components/Button';
 import { useAuth } from '~/Provider/AuthProvider';
-import httpRequest from '~/utils/httpRequest';
+import * as httpRequest from '~/utils/httpRequest';
 import { useUser } from '~/Provider/UserProvider';
 
 const cx = classNames.bind(styles);
@@ -44,12 +44,22 @@ function LoginContent() {
                 { withCredentials: true },
             );
 
+            console.log('res user: ', user);
+
+            if (user?.metadata?.token) {
+                localStorage.setItem('token', user.metadata.token);
+            }
+
             //show toast when info is not true
             setCurUser(user);
             setIsAuthenticate(true);
             onCloseModal();
 
-            const userRes = await httpRequest.get('/users');
+            const userRes = await httpRequest.get(
+                '/users',
+                {},
+                { withCredentials: true },
+            );
 
             if (userRes.data) {
                 setCurUser(userRes.data.user);
@@ -66,7 +76,7 @@ function LoginContent() {
     };
 
     return (
-        <div className={cx('content')} >
+        <div className={cx('content')}>
             <button
                 className={cx('close-btn')}
                 onClick={() => {

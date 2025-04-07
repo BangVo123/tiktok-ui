@@ -26,6 +26,8 @@ function FollowingAccounts({ label }) {
         else setNumItems(3);
     }, []);
 
+    console.log('following: ', accountRelations.current.following);
+
     return (
         <>
             {accountRelations.current?.following &&

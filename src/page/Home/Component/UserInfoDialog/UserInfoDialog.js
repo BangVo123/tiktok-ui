@@ -5,12 +5,15 @@ import styles from './UserInfoDialog.module.scss';
 import Image from '~/components/Image';
 import { memo, useRef, useState } from 'react';
 import * as httpRequest from '~/utils/httpRequest';
+import { toast } from 'react-toastify';
+import { useUser } from '~/Provider/UserProvider';
 
 const cx = classNames.bind(styles);
 
 function InfoDialog({ children, info, showFollowBtn, isFollow }) {
     const [userInfo, setUserInfo] = useState();
     const compRef = useRef();
+    const { isAuthenticate } = useUser();
 
     const fetchAPI = async () => {
         const res = await httpRequest.get(

@@ -1,4 +1,3 @@
-import { HeaderOnly } from '~/layouts';
 import config from '~/config';
 
 import Home from '~/page/Home';

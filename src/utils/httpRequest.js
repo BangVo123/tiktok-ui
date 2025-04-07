@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+const token = localStorage.getItem('token');
+
 const httpRequest = axios.create({
-    // baseURL: process.env.REACT_APP_BASE_URL,
     baseURL: 'http://localhost:3050/api/v1',
     withCredentials: true,
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
 });
 
 export const get = async (path, query = {}, options = {}) => {
@@ -11,6 +13,7 @@ export const get = async (path, query = {}, options = {}) => {
         const res = await httpRequest.get(path, {
             ...options,
             params: query,
+            withCredentials: true,
         });
         return res.data;
     } catch (e) {

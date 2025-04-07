@@ -133,6 +133,7 @@ function EditFile(props) {
             } else {
                 const data = { ...uploadInfo };
                 data['content'] = state.desc;
+                console.log(data)
                 const result = await httpRequest.post('/video', data, {
                     withCredentials: true,
                 });

@@ -28,16 +28,15 @@ function Home() {
                 { withCredentials: true },
             );
 
-            if (res.data.length === 0) setHasMore(false);
-            else {
-                if (res.data.length < 5) {
-                    setHasMore(false);
-                }
-                setVideos((prev) => {
-                    return [...prev, ...res.data];
-                });
-                paginateRef.current.page = paginateRef.current.page + 1;
+            console.log(res);
+
+            if (res.data?.length < 5) {
+                setHasMore(false);
             }
+            setVideos((prev) => {
+                return [...prev, ...res.data];
+            });
+            paginateRef.current.page = paginateRef.current.page + 1;
         } catch (err) {
             console.log('Error', err);
         } finally {
@@ -54,7 +53,7 @@ function Home() {
             });
             if (node) observer.current.observe(node);
         },
-        [isLoading.hasMore, loadMore],
+        [isLoading, hasMore, loadMore],
     );
 
     return (

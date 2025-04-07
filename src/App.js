@@ -13,7 +13,6 @@ function App() {
     const {
         curUser,
         setCurUser,
-        isAuthenticate,
         setIsAuthenticate,
         setVideos,
         paginateRef,
@@ -38,21 +37,25 @@ function App() {
                     setVideos(videosRes.data);
                 }
 
+                const token = localStorage.getItem('token');
                 console.log('Fetching user data...');
                 const userRes = await httpRequest.get(
                     '/users',
                     {},
                     {
-                        withCredentials: true,
+                        headers: token
+                            ? { Authorization: `Bearer ${token}` }
+                            : {},
                     },
                 );
 
                 if (userRes?.data) {
                     setCurUser(userRes.data.user);
                     setIsAuthenticate(true);
-                    setFavorite(userRes.data.favorite);
-                    setFollow(userRes.data.follow);
-                    accountRelations.current = userRes.data.accRelations;
+                    setFavorite(userRes.data?.favorite);
+                    setFollow(userRes.data?.follow);
+                    accountRelations.current = userRes.data?.accRelations;
+                    console.log(userRes.data.accRelations);
                 }
 
                 //connect socket
